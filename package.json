@@ -1,0 +1,70 @@
+{
+  "name": "remark-block-directive",
+  "version": "0.1.0",
+  "description": "Remark plugin for turning HTML directive into MDX tags",
+  "license": "MIT",
+  "author": {
+    "name": "Eric Chen"
+  },
+  "keywords": [
+    "code-block",
+    "css",
+    "doc",
+    "document",
+    "documentation",
+    "docusaurus",
+    "markdown",
+    "mdx",
+    "mdxjs",
+    "remark",
+    "remark-plugin",
+    "remarkjs",
+    "style",
+    "stylesheet"
+  ],
+  "homepage": "https://github.com/show-docs/remark-block-directive",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/show-docs/remark-block-directive.git"
+  },
+  "bugs": {
+    "url": "https://github.com/show-docs/remark-block-directive/issues"
+  },
+  "main": "lib/index.mjs",
+  "files": [],
+  "type": "module",
+  "scripts": {
+    "lint:staged": "nice-move lint staged",
+    "prepare": "nice-move git hooks",
+    "prepublishOnly": "pnpm run lint:staged && pnpm test",
+    "snapshot": "ava --fail-fast -u -w",
+    "test": "ava --fail-fast"
+  },
+  "dependencies": {
+    "unist-util-visit": "^5.0.0"
+  },
+  "devDependencies": {
+    "@bring-it/npm": "^0.6.0",
+    "@nice-move/all-in-base": "^0.4.26",
+    "ava": "^6.3.0",
+    "eslint": "^9.26.0",
+    "eslint-plugin-ava": "^15.0.1",
+    "garou": "^0.9.7",
+    "prettier": "^3.5.3",
+    "remark": "^15.0.1",
+    "remark-mdx": "^3.1.0",
+    "unist-util-remove-position": "^5.0.0"
+  },
+  "peerDependencies": {
+    "remark-directive": "^4.0.0"
+  },
+  "packageManager": "pnpm@10.10.0",
+  "engines": {
+    "node": ">=18.0.0 || ^16.13.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "prettier": "@nice-move/prettier-config"
+}
