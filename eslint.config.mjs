@@ -1,8 +1,8 @@
-import base from '@nice-move/all-in-base';
+import configs from '@nice-move/all-in-base/eslint';
 import ava from 'eslint-plugin-ava';
 
 export default [
-  ...base,
+  ...configs,
   {
     files: ['test/**/*.mjs'],
     ...ava.configs['flat/recommended'],
