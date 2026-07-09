@@ -4,18 +4,20 @@ import remarkMdx from 'remark-mdx';
 import { removePosition } from 'unist-util-remove-position';
 
 import { remarkBlockDirective } from '../../lib/index.mjs';
+import type { ExecutionContext } from 'ava';
+import type { Node } from 'unist';
 
-function removePST(ast) {
+function removePST(ast: Node) {
   removePosition(ast, { force: true });
 
-  return ast.children;
+  return (ast as any).children;
 }
 
-export async function TransformSnapshot(t, input, option = {}) {
+export async function TransformSnapshot(t: ExecutionContext, input: string) {
   const instance = remark()
     .use(remarkMdx)
     .use(remarkDirective)
-    .use(remarkBlockDirective, option);
+    .use(remarkBlockDirective);
 
   const ast = instance.parse(input);
 

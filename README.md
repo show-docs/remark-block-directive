@@ -8,7 +8,7 @@ Remark plugin for turning HTML directive into MDX tags.
 
 [npm-url]: https://www.npmjs.com/package/remark-block-directive
 [npm-badge]: https://img.shields.io/npm/v/remark-block-directive.svg?style=flat-square&logo=npm
-[github-url]: git+https://github.com/show-docs/remark-block-directive
+[github-url]: https://github.com/show-docs/remark-block-directive
 [github-badge]: https://img.shields.io/npm/l/remark-block-directive.svg?style=flat-square&colorB=blue&logo=github
 [node-badge]: https://img.shields.io/node/v/remark-block-directive.svg?style=flat-square&colorB=green&logo=node.js
 

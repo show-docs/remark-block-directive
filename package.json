@@ -43,25 +43,24 @@
     "test": "ava --fail-fast"
   },
   "dependencies": {
-    "unist-util-visit": "^5.0.0"
+    "unist-util-visit": "^5.1.0"
   },
   "devDependencies": {
-    "@bring-it/npm": "^0.9.3",
-    "@nice-move/all-in-base": "^0.6.31",
-    "ava": "^6.4.1",
-    "eslint": "^9.39.2",
-    "eslint-plugin-ava": "^15.1.0",
-    "garou": "^0.9.17",
-    "prettier": "~3.7.4",
+    "@bring-it/npm": "^0.9.6",
+    "@nice-move/all-in-base": "^0.8.10",
+    "ava": "^8.0.1",
+    "eslint": "^9.39.4",
+    "garou": "^0.9.21",
+    "prettier": "~3.9.4",
     "remark": "^15.0.1",
     "remark-mdx": "^3.1.1",
-    "typescript": "~5.9.3",
+    "typescript": "~6.0.3",
     "unist-util-remove-position": "^5.0.0"
   },
   "peerDependencies": {
     "remark-directive": "^4.0.0"
   },
-  "packageManager": "pnpm@10.27.0",
+  "packageManager": "pnpm@10.34.4",
   "engines": {
     "node": ">=18.0.0 || ^16.13.0",
     "pnpm": "^10.27.0"
@@ -69,6 +68,11 @@
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org/"
+  },
+  "ava": {
+    "extensions": [
+      "mts"
+    ]
   },
   "prettier": "@nice-move/prettier-config"
 }
