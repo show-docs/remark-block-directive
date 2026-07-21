@@ -1,41 +1,40 @@
-import test from 'ava';
+import { test } from 'vitest';
 
 import { TransformSnapshot } from './helper/lib.mts';
 
-test(
-  'not html',
-  TransformSnapshot,
-  `
-:::text
+test.each([
+  [
+    'not html',
+    `
+::::text
 
 abc
-
-:::
-`,
-);
-
-test(
-  'html',
-  TransformSnapshot,
-  `
-::::details
-
-:::summary
-abc
-:::
 
 ::::
 `,
-);
+  ],
+  [
+    'html',
+    `
+:::::details
 
-test(
-  'class and id',
-  TransformSnapshot,
-  `
-:::div{#id.class}
+::::summary
+abc
+::::
+
+:::::
+`,
+  ],
+  [
+    'class and id',
+    `
+::::div{#id.class}
 
 abc
 
-:::
+::::
 `,
-);
+  ],
+])('%s', async (_name, input) => {
+  await TransformSnapshot(input);
+});

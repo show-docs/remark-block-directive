@@ -1,0 +1,227 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`class and id > ast 1`] = `
+[
+  {
+    "attributes": {
+      "class": "class",
+      "id": "id",
+    },
+    "children": [
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "abc",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "name": "div",
+    "type": "containerDirective",
+  },
+]
+`;
+
+exports[`class and id > input 1`] = `
+"
+::::div{#id.class}
+
+abc
+
+::::
+"
+`;
+
+exports[`class and id > output1 1`] = `
+"<div className="class" id="id">
+  abc
+</div>"
+`;
+
+exports[`class and id > output2 1`] = `
+"<div className="class" id="id">
+  abc
+</div>"
+`;
+
+exports[`class and id > parsed 1`] = `
+[
+  {
+    "attributes": [
+      {
+        "name": "className",
+        "type": "mdxJsxAttribute",
+        "value": "class",
+      },
+      {
+        "name": "id",
+        "type": "mdxJsxAttribute",
+        "value": "id",
+      },
+    ],
+    "children": [
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "abc",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "name": "div",
+    "type": "mdxJsxFlowElement",
+  },
+]
+`;
+
+exports[`html > ast 1`] = `
+[
+  {
+    "attributes": {},
+    "children": [
+      {
+        "attributes": {},
+        "children": [
+          {
+            "children": [
+              {
+                "type": "text",
+                "value": "abc",
+              },
+            ],
+            "type": "paragraph",
+          },
+        ],
+        "name": "summary",
+        "type": "containerDirective",
+      },
+    ],
+    "name": "details",
+    "type": "containerDirective",
+  },
+]
+`;
+
+exports[`html > input 1`] = `
+"
+:::::details
+
+::::summary
+abc
+::::
+
+:::::
+"
+`;
+
+exports[`html > output1 1`] = `
+"<details>
+  <summary>
+    abc
+  </summary>
+</details>"
+`;
+
+exports[`html > output2 1`] = `
+"<details>
+  <summary>
+    abc
+  </summary>
+</details>"
+`;
+
+exports[`html > parsed 1`] = `
+[
+  {
+    "attributes": [],
+    "children": [
+      {
+        "attributes": [],
+        "children": [
+          {
+            "children": [
+              {
+                "type": "text",
+                "value": "abc",
+              },
+            ],
+            "type": "paragraph",
+          },
+        ],
+        "name": "summary",
+        "type": "mdxJsxFlowElement",
+      },
+    ],
+    "name": "details",
+    "type": "mdxJsxFlowElement",
+  },
+]
+`;
+
+exports[`not html > ast 1`] = `
+[
+  {
+    "attributes": {},
+    "children": [
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "abc",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "name": "text",
+    "type": "containerDirective",
+  },
+]
+`;
+
+exports[`not html > input 1`] = `
+"
+::::text
+
+abc
+
+::::
+"
+`;
+
+exports[`not html > output1 1`] = `
+":::text
+abc
+:::"
+`;
+
+exports[`not html > output2 1`] = `
+":::text
+abc
+:::"
+`;
+
+exports[`not html > parsed 1`] = `
+[
+  {
+    "attributes": {},
+    "children": [
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "abc",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "name": "text",
+    "type": "containerDirective",
+  },
+]
+`;
