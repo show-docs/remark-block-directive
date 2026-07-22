@@ -1,5 +1,5 @@
 {
-  "extends": "@nice-move/tsconfig/base.json",
+  "extends": "@nice-move/tsconfig/node.json",
   "compilerOptions": {
     "noEmit": true,
   },

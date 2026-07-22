@@ -1,6 +1,6 @@
 {
   "name": "remark-block-directive",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Remark plugin for turning HTML directive into MDX tags",
   "license": "MIT",
   "author": {
@@ -30,10 +30,13 @@
   "bugs": {
     "url": "https://github.com/show-docs/remark-block-directive/issues"
   },
-  "main": "lib/index.mjs",
-  "files": [],
+  "main": "dist/index.mjs",
+  "files": [
+    "dist"
+  ],
   "type": "module",
   "scripts": {
+    "build": "tsc -p tsconfig.build.json",
     "coverage": "vitest run --coverage",
     "lint:eslint": "eslint . --quiet --fix --concurrency=auto",
     "lint:staged": "nice-move lint staged",

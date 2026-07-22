@@ -6,7 +6,7 @@ import remarkFrontmatter from 'remark-frontmatter';
 import remarkMdx from 'remark-mdx';
 import { removePosition } from 'unist-util-remove-position';
 
-import { remarkBlockDirective } from '../../lib/index.mjs';
+import { remarkBlockDirective } from '../../src/index.mts';
 import type { Node } from 'unist';
 
 function removePST(ast: Node) {

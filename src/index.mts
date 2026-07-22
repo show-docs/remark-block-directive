@@ -1,5 +1,35 @@
 import YAML from 'yaml';
 
+import type { MdxJsxAttribute } from 'mdast-util-mdx-jsx';
+import type { Root, RootContent } from 'mdast';
+
+/** 转换模式。 */
+type Mode = 'mdx' | 'html';
+
+/** directive 属性值类型（`remark-directive` 允许 `null`/`undefined` 空值）。 */
+type DirectiveAttributes = Record<string, string | null | undefined>;
+
+/**
+ * 可被本插件处理的任意 mdast 节点的递归形态，用于遍历异构的 mdast 子树。
+ */
+type AnyNode = {
+  type: string;
+  name?: string | null;
+  attributes?: unknown;
+  children?: AnyNode[];
+  value?: string;
+  data?: unknown;
+};
+
+/** 待转换的 HTML 标签型 containerDirective（属性已是 `Record` 形态）。 */
+interface DirectiveNode {
+  type: 'containerDirective';
+  name: string;
+  attributes?: DirectiveAttributes;
+  children: AnyNode[];
+  data?: unknown;
+}
+
 /** 会被转换为对应 `mdxJsxFlowElement` 的 HTML 标签型 containerDirective。 */
 const convertibleTags = [
   'article',
@@ -33,7 +63,7 @@ const splittableTags = [
 /**
  * 将 `className`/`id` 属性值转义，避免在 `mode: 'html'` 下输出非法 HTML。
  */
-function escapeHtml(value) {
+function escapeHtml(value: string): string {
   return String(value)
     .replaceAll('&', '&amp;')
     .replaceAll('<', '&lt;')
@@ -41,31 +71,43 @@ function escapeHtml(value) {
     .replaceAll('"', '&quot;');
 }
 
-function readConfig(tree) {
-  const node = tree.children?.find((child) => child.type === 'yaml');
+/**
+ * 读取顶层首个 frontmatter（`yaml` 节点）中的配置。
+ * 仅取首个，忽略后续/嵌套出现的 frontmatter。
+ */
+function readConfig(tree: Root): { blockBreak?: boolean } {
+  const node = tree.children.find((child) => child.type === 'yaml');
 
-  if (!node) {
+  if (!node || node.value == null) {
     return {};
   }
 
   try {
-    return YAML.parse(node.value) ?? {};
+    return (YAML.parse(node.value) ?? {}) as { blockBreak?: boolean };
   } catch {
     // ignore invalid yaml
     return {};
   }
 }
 
-function splitByBreak(node) {
-  const parts = [[]];
+/**
+ * 按 `---` 分割线将容器拆分为多个同型容器。
+ * 若无分割线则返回原节点（单元素数组），保持调用方统一处理。
+ */
+function splitByBreak(node: DirectiveNode): DirectiveNode[] {
+  const parts: AnyNode[][] = [];
+  let current: AnyNode[] = [];
 
   for (const child of node.children) {
     if (child.type === 'thematicBreak') {
-      parts.push([]);
+      parts.push(current);
+      current = [];
     } else {
-      parts.at(-1).push(child);
+      current.push(child);
     }
   }
+
+  parts.push(current);
 
   if (parts.length === 1) {
     return [node];
@@ -78,35 +120,43 @@ function splitByBreak(node) {
 
 /**
  * 将 HTML 标签型 containerDirective 转换为 `mdxJsxFlowElement`（MDX 体系）。
- * 原地修改节点并返回单元素数组，便于与 `toHtmlFlow` 统一处理。
  */
-function toMdxJsx(node) {
-  node.type = 'mdxJsxFlowElement';
-  node.attributes = [
+function toMdxJsx(node: DirectiveNode): AnyNode[] {
+  const candidates: MdxJsxAttribute[] = [
     {
       type: 'mdxJsxAttribute',
       name: 'className',
       value: node.attributes?.class,
     },
     { type: 'mdxJsxAttribute', name: 'id', value: node.attributes?.id },
-  ].filter(({ value }) => value !== undefined);
+  ];
+  const attributes = candidates.filter(({ value }) => value !== undefined);
 
-  return [node];
+  return [
+    {
+      type: 'mdxJsxFlowElement',
+      name: node.name,
+      attributes,
+      children: node.children,
+    },
+  ];
 }
 
 /**
  * 将 HTML 标签型 containerDirective 转换为一组原生 `html` 节点
  * （开标签 + 子节点 + 闭标签），以便在纯 remark-rehype 体系下无需 MDX 即可渲染。
  */
-function toHtmlFlow(node) {
-  const attrs = [];
+function toHtmlFlow(node: DirectiveNode): AnyNode[] {
+  const attrs: string[] = [];
 
-  if (node.attributes?.class) {
-    attrs.push(`class="${escapeHtml(node.attributes.class)}"`);
+  const className = node.attributes?.class;
+  if (className) {
+    attrs.push(`class="${escapeHtml(className)}"`);
   }
 
-  if (node.attributes?.id) {
-    attrs.push(`id="${escapeHtml(node.attributes.id)}"`);
+  const id = node.attributes?.id;
+  if (id) {
+    attrs.push(`id="${escapeHtml(id)}"`);
   }
 
   const open = `<${node.name}${attrs.length > 0 ? ` ${attrs.join(' ')}` : ''}>`;
@@ -118,6 +168,11 @@ function toHtmlFlow(node) {
   ];
 }
 
+/** 类型守卫：判断节点是否为可转换的 containerDirective。 */
+function isContainerDirective(node: AnyNode): node is DirectiveNode {
+  return node.type === 'containerDirective' && typeof node.name === 'string';
+}
+
 /**
  * 递归遍历节点列表：先处理子节点，再将 HTML 标签型 `containerDirective`
  * 按 `mode` 转换为目标节点；若开启分页且标签可分页，则先按 `---` 拆分为多个容器。
@@ -125,23 +180,24 @@ function toHtmlFlow(node) {
  * 通过单次遍历同时完成「子节点转换 → 分页拆分 → 节点转换」，
  * 替代原先 `splitTree` 与 `transformNodes` 的两次独立递归。
  */
-function transformNodes(nodes, context) {
-  const result = [];
+function transformNodes(
+  nodes: AnyNode[],
+  context: { mode: Mode; pageBreak: boolean },
+): AnyNode[] {
+  const result: AnyNode[] = [];
 
   for (const node of nodes) {
     const children = node.children
       ? transformNodes(node.children, context)
-      : node.children;
-    const current = node.children ? { ...node, children } : node;
+      : [];
+    const current: AnyNode = node.children ? { ...node, children } : node;
 
-    if (
-      node.type === 'containerDirective' &&
-      convertibleTags.includes(node.name)
-    ) {
-      const parts =
+    if (isContainerDirective(node) && convertibleTags.includes(node.name)) {
+      const source: DirectiveNode = { ...node, children };
+      const parts: DirectiveNode[] =
         context.pageBreak && splittableTags.includes(node.name)
-          ? splitByBreak(current)
-          : [current];
+          ? splitByBreak(source)
+          : [source];
 
       for (const part of parts) {
         result.push(
@@ -169,19 +225,23 @@ function transformNodes(nodes, context) {
  * 前置依赖：管道中必须在本插件之前接入 frontmatter 解析器（如 `remark-frontmatter`），
  * 否则 AST 中不会存在 `yaml` 节点，`blockBreak` 配置将无法被读取（详情见 README）。
  */
-function transform(tree, mode = 'mdx') {
+function transform(tree: Root, mode: Mode = 'mdx'): void {
   const config = readConfig(tree);
 
   tree.children = transformNodes(tree.children, {
     mode,
     pageBreak: config.blockBreak === true,
-  });
+  }) as RootContent[];
 }
 
-export function remarkBlockDirective(options = {}) {
+interface Options {
+  mode?: Mode;
+}
+
+export function remarkBlockDirective(options: Options = {}) {
   const { mode = 'mdx' } = options;
 
-  return (tree) => {
+  return (tree: Root) => {
     transform(tree, mode);
   };
 }

@@ -4,7 +4,7 @@ import { expect, test } from 'vitest';
 import { remark } from 'remark';
 import remarkDirective from 'remark-directive';
 import remarkMdx from 'remark-mdx';
-import { remarkBlockDirective } from '../lib/index.mjs';
+import { remarkBlockDirective } from '../src/index.mts';
 
 import { SnapshotParse, SnapshotTransform } from './helper/lib.mts';
 

@@ -4,7 +4,7 @@ export default defineConfig({
   test: {
     include: ['test/*.mts'],
     coverage: {
-      include: ['lib/**'],
+      include: ['src/**'],
     },
   },
 });
