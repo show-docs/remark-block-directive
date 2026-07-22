@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`class and id > ast 1`] = `
+exports[`class-and-id > ast 1`] = `
 [
   {
     "attributes": {
@@ -24,29 +24,28 @@ exports[`class and id > ast 1`] = `
 ]
 `;
 
-exports[`class and id > input 1`] = `
-"
-::::div{#id.class}
+exports[`class-and-id > input 1`] = `
+"::::::div{#id.class}
 
 abc
 
-::::
+::::::
 "
 `;
 
-exports[`class and id > output1 1`] = `
+exports[`class-and-id > output1 1`] = `
 "<div className="class" id="id">
   abc
 </div>"
 `;
 
-exports[`class and id > output2 1`] = `
+exports[`class-and-id > output2 1`] = `
 "<div className="class" id="id">
   abc
 </div>"
 `;
 
-exports[`class and id > parsed 1`] = `
+exports[`class-and-id > parsed 1`] = `
 [
   {
     "attributes": [
@@ -67,6 +66,86 @@ exports[`class and id > parsed 1`] = `
           {
             "type": "text",
             "value": "abc",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "name": "div",
+    "type": "mdxJsxFlowElement",
+  },
+]
+`;
+
+exports[`empty-frontmatter > ast 1`] = `
+[
+  {
+    "type": "yaml",
+    "value": "",
+  },
+  {
+    "attributes": {},
+    "children": [
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "A",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "name": "div",
+    "type": "containerDirective",
+  },
+]
+`;
+
+exports[`empty-frontmatter > input 1`] = `
+"---
+---
+
+::::div
+
+A
+
+::::
+"
+`;
+
+exports[`empty-frontmatter > output1 1`] = `
+"---
+---
+
+<div>
+  A
+</div>"
+`;
+
+exports[`empty-frontmatter > output2 1`] = `
+"---
+---
+
+<div>
+  A
+</div>"
+`;
+
+exports[`empty-frontmatter > parsed 1`] = `
+[
+  {
+    "type": "yaml",
+    "value": "",
+  },
+  {
+    "attributes": [],
+    "children": [
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "A",
           },
         ],
         "type": "paragraph",
@@ -107,14 +186,13 @@ exports[`html > ast 1`] = `
 `;
 
 exports[`html > input 1`] = `
-"
-:::::details
+":::::::details
 
-::::summary
+::::::summary
 abc
-::::
+::::::
 
-:::::
+:::::::
 "
 `;
 
@@ -162,7 +240,300 @@ exports[`html > parsed 1`] = `
 ]
 `;
 
-exports[`not html > ast 1`] = `
+exports[`invalid-yaml > ast 1`] = `
+[
+  {
+    "type": "yaml",
+    "value": "blockBreak: true
+	foo: bar",
+  },
+  {
+    "attributes": {},
+    "children": [
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "A",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "name": "div",
+    "type": "containerDirective",
+  },
+]
+`;
+
+exports[`invalid-yaml > input 1`] = `
+"---
+blockBreak: true
+	foo: bar
+---
+
+::::div
+
+A
+
+::::
+"
+`;
+
+exports[`invalid-yaml > output1 1`] = `
+"---
+blockBreak: true
+	foo: bar
+---
+
+<div>
+  A
+</div>"
+`;
+
+exports[`invalid-yaml > output2 1`] = `
+"---
+blockBreak: true
+	foo: bar
+---
+
+<div>
+  A
+</div>"
+`;
+
+exports[`invalid-yaml > parsed 1`] = `
+[
+  {
+    "type": "yaml",
+    "value": "blockBreak: true
+	foo: bar",
+  },
+  {
+    "attributes": [],
+    "children": [
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "A",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "name": "div",
+    "type": "mdxJsxFlowElement",
+  },
+]
+`;
+
+exports[`nested-pagebreak-split > ast 1`] = `
+[
+  {
+    "type": "yaml",
+    "value": "blockBreak: true",
+  },
+  {
+    "attributes": {},
+    "children": [
+      {
+        "attributes": {},
+        "children": [
+          {
+            "children": [
+              {
+                "type": "text",
+                "value": "S",
+              },
+            ],
+            "type": "paragraph",
+          },
+          {
+            "type": "thematicBreak",
+          },
+          {
+            "children": [
+              {
+                "type": "text",
+                "value": "T",
+              },
+            ],
+            "type": "paragraph",
+          },
+        ],
+        "name": "p",
+        "type": "containerDirective",
+      },
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "A",
+          },
+        ],
+        "type": "paragraph",
+      },
+      {
+        "type": "thematicBreak",
+      },
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "B",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "name": "div",
+    "type": "containerDirective",
+  },
+]
+`;
+
+exports[`nested-pagebreak-split > input 1`] = `
+"---
+blockBreak: true
+---
+
+::::div
+
+:::p
+
+S
+
+---
+
+T
+
+:::
+
+A
+
+---
+
+B
+
+::::
+"
+`;
+
+exports[`nested-pagebreak-split > output1 1`] = `
+"---
+blockBreak: true
+---
+
+<div>
+  :::p
+  S
+
+  ***
+
+  T
+  :::
+
+  A
+</div>
+
+<div>
+  B
+</div>"
+`;
+
+exports[`nested-pagebreak-split > output2 1`] = `
+"---
+blockBreak: true
+---
+
+<div>
+  :::p
+  S
+
+  ***
+
+  T
+  :::
+
+  A
+</div>
+
+<div>
+  B
+</div>"
+`;
+
+exports[`nested-pagebreak-split > parsed 1`] = `
+[
+  {
+    "type": "yaml",
+    "value": "blockBreak: true",
+  },
+  {
+    "attributes": [],
+    "children": [
+      {
+        "attributes": {},
+        "children": [
+          {
+            "children": [
+              {
+                "type": "text",
+                "value": "S",
+              },
+            ],
+            "type": "paragraph",
+          },
+          {
+            "type": "thematicBreak",
+          },
+          {
+            "children": [
+              {
+                "type": "text",
+                "value": "T",
+              },
+            ],
+            "type": "paragraph",
+          },
+        ],
+        "name": "p",
+        "type": "containerDirective",
+      },
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "A",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "name": "div",
+    "type": "mdxJsxFlowElement",
+  },
+  {
+    "attributes": [],
+    "children": [
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "B",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "name": "div",
+    "type": "mdxJsxFlowElement",
+  },
+]
+`;
+
+exports[`not-html > ast 1`] = `
 [
   {
     "attributes": {},
@@ -183,29 +554,28 @@ exports[`not html > ast 1`] = `
 ]
 `;
 
-exports[`not html > input 1`] = `
-"
-::::text
+exports[`not-html > input 1`] = `
+"::::::text
 
 abc
 
-::::
+::::::
 "
 `;
 
-exports[`not html > output1 1`] = `
+exports[`not-html > output1 1`] = `
 ":::text
 abc
 :::"
 `;
 
-exports[`not html > output2 1`] = `
+exports[`not-html > output2 1`] = `
 ":::text
 abc
 :::"
 `;
 
-exports[`not html > parsed 1`] = `
+exports[`not-html > parsed 1`] = `
 [
   {
     "attributes": {},
@@ -222,6 +592,443 @@ exports[`not html > parsed 1`] = `
     ],
     "name": "text",
     "type": "containerDirective",
+  },
+]
+`;
+
+exports[`pagebreak-false > ast 1`] = `
+[
+  {
+    "type": "yaml",
+    "value": "blockBreak: false",
+  },
+  {
+    "attributes": {},
+    "children": [
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "A",
+          },
+        ],
+        "type": "paragraph",
+      },
+      {
+        "type": "thematicBreak",
+      },
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "B",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "name": "div",
+    "type": "containerDirective",
+  },
+]
+`;
+
+exports[`pagebreak-false > input 1`] = `
+"---
+blockBreak: false
+---
+
+::::div
+
+A
+
+---
+
+B
+
+::::
+"
+`;
+
+exports[`pagebreak-false > output1 1`] = `
+"---
+blockBreak: false
+---
+
+<div>
+  A
+
+  ***
+
+  B
+</div>"
+`;
+
+exports[`pagebreak-false > output2 1`] = `
+"---
+blockBreak: false
+---
+
+<div>
+  A
+
+  ***
+
+  B
+</div>"
+`;
+
+exports[`pagebreak-false > parsed 1`] = `
+[
+  {
+    "type": "yaml",
+    "value": "blockBreak: false",
+  },
+  {
+    "attributes": [],
+    "children": [
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "A",
+          },
+        ],
+        "type": "paragraph",
+      },
+      {
+        "type": "thematicBreak",
+      },
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "B",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "name": "div",
+    "type": "mdxJsxFlowElement",
+  },
+]
+`;
+
+exports[`pagebreak-leading-break > ast 1`] = `
+[
+  {
+    "type": "yaml",
+    "value": "blockBreak: true",
+  },
+  {
+    "attributes": {},
+    "children": [
+      {
+        "type": "thematicBreak",
+      },
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "A",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "name": "div",
+    "type": "containerDirective",
+  },
+]
+`;
+
+exports[`pagebreak-leading-break > input 1`] = `
+"---
+blockBreak: true
+---
+
+::::div
+
+---
+
+A
+
+::::
+"
+`;
+
+exports[`pagebreak-leading-break > output1 1`] = `
+"---
+blockBreak: true
+---
+
+<div>
+  A
+</div>"
+`;
+
+exports[`pagebreak-leading-break > output2 1`] = `
+"---
+blockBreak: true
+---
+
+<div>
+  A
+</div>"
+`;
+
+exports[`pagebreak-leading-break > parsed 1`] = `
+[
+  {
+    "type": "yaml",
+    "value": "blockBreak: true",
+  },
+  {
+    "attributes": [],
+    "children": [
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "A",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "name": "div",
+    "type": "mdxJsxFlowElement",
+  },
+]
+`;
+
+exports[`pagebreak-no-break > ast 1`] = `
+[
+  {
+    "type": "yaml",
+    "value": "blockBreak: true",
+  },
+  {
+    "attributes": {},
+    "children": [
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "A",
+          },
+        ],
+        "type": "paragraph",
+      },
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "B",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "name": "div",
+    "type": "containerDirective",
+  },
+]
+`;
+
+exports[`pagebreak-no-break > input 1`] = `
+"---
+blockBreak: true
+---
+
+::::div
+
+A
+
+B
+
+::::
+"
+`;
+
+exports[`pagebreak-no-break > output1 1`] = `
+"---
+blockBreak: true
+---
+
+<div>
+  A
+
+  B
+</div>"
+`;
+
+exports[`pagebreak-no-break > output2 1`] = `
+"---
+blockBreak: true
+---
+
+<div>
+  A
+
+  B
+</div>"
+`;
+
+exports[`pagebreak-no-break > parsed 1`] = `
+[
+  {
+    "type": "yaml",
+    "value": "blockBreak: true",
+  },
+  {
+    "attributes": [],
+    "children": [
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "A",
+          },
+        ],
+        "type": "paragraph",
+      },
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "B",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "name": "div",
+    "type": "mdxJsxFlowElement",
+  },
+]
+`;
+
+exports[`pagebreak-split > ast 1`] = `
+[
+  {
+    "type": "yaml",
+    "value": "blockBreak: true",
+  },
+  {
+    "attributes": {},
+    "children": [
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "A",
+          },
+        ],
+        "type": "paragraph",
+      },
+      {
+        "type": "thematicBreak",
+      },
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "B",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "name": "div",
+    "type": "containerDirective",
+  },
+]
+`;
+
+exports[`pagebreak-split > input 1`] = `
+"---
+blockBreak: true
+---
+
+:::div
+
+A
+
+---
+
+B
+
+:::
+"
+`;
+
+exports[`pagebreak-split > output1 1`] = `
+"---
+blockBreak: true
+---
+
+<div>
+  A
+</div>
+
+<div>
+  B
+</div>"
+`;
+
+exports[`pagebreak-split > output2 1`] = `
+"---
+blockBreak: true
+---
+
+<div>
+  A
+</div>
+
+<div>
+  B
+</div>"
+`;
+
+exports[`pagebreak-split > parsed 1`] = `
+[
+  {
+    "type": "yaml",
+    "value": "blockBreak: true",
+  },
+  {
+    "attributes": [],
+    "children": [
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "A",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "name": "div",
+    "type": "mdxJsxFlowElement",
+  },
+  {
+    "attributes": [],
+    "children": [
+      {
+        "children": [
+          {
+            "type": "text",
+            "value": "B",
+          },
+        ],
+        "type": "paragraph",
+      },
+    ],
+    "name": "div",
+    "type": "mdxJsxFlowElement",
   },
 ]
 `;

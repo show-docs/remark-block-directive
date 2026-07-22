@@ -2,6 +2,7 @@ import { expect } from 'vitest';
 
 import { remark } from 'remark';
 import remarkDirective from 'remark-directive';
+import remarkFrontmatter from 'remark-frontmatter';
 import remarkMdx from 'remark-mdx';
 import { removePosition } from 'unist-util-remove-position';
 
@@ -16,6 +17,7 @@ function removePST(ast: Node) {
 
 export async function TransformSnapshot(input: string) {
   const instance = remark()
+    .use(remarkFrontmatter, ['yaml'])
     .use(remarkMdx)
     .use(remarkDirective)
     .use(remarkBlockDirective);

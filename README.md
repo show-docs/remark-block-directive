@@ -14,19 +14,37 @@ Remark plugin for turning HTML directive into MDX tags.
 
 ## Example
 
-```md
 Turn:
 
-:::div{.foo}
+```md
+---
+blockBreak: true
+---
+
+::::div{.abc}
+
+xyz
+
+:::p
+
+foo
+
+---
 
 bar
 
 :::
 
+::::
+```
+
 Into:
 
-<div class="foo">
-bar
+```html
+<div class="abc">
+  xyz
+  <p>foo</p>
+  <p>bar</p>
 </div>
 ```
 
@@ -48,11 +66,13 @@ import readFileSync from 'node:fs';
 import { remark } from 'remark';
 import { remarkBlockDirective } from 'remark-block-directive';
 import remarkDirective from 'remark-directive';
+import remarkFrontmatter from 'remark-frontmatter';
 import remarkMdx from 'remark-mdx';
 
 const markdownText = readFileSync('example.md', 'utf8');
 
 remark()
+  .use(remarkFrontmatter, ['yaml'])
   .use(remarkMdx)
   .use(remarkDirective)
   .use(remarkBlockDirective)

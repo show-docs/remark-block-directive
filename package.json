@@ -1,6 +1,6 @@
 {
   "name": "remark-block-directive",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Remark plugin for turning HTML directive into MDX tags",
   "license": "MIT",
   "author": {
@@ -44,28 +44,35 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "unist-util-visit": "^5.1.0"
+    "unist-util-visit": "^5.1.0",
+    "yaml": "^2.9.0"
   },
   "devDependencies": {
     "@bring-it/npm": "^0.9.6",
     "@nice-move/all-in-base": "^0.8.10",
-    "@vitest/coverage-v8": "^3.2.7",
+    "@vitest/coverage-v8": "^4.1.10",
     "eslint": "^9.39.4",
     "garou": "^0.9.21",
-    "prettier": "~3.9.4",
+    "prettier": "~3.9.5",
     "remark": "^15.0.1",
+    "remark-frontmatter": "^5.0.0",
     "remark-mdx": "^3.1.1",
     "typescript": "~6.0.3",
     "unist-util-remove-position": "^5.0.0",
-    "vitest": "^3.2.7"
+    "vitest": "^4.1.10"
   },
   "peerDependencies": {
-    "remark-directive": "^4.0.0"
+    "remark-directive": "^4.0.0",
+    "remark-frontmatter": "^5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "remark-frontmatter": {
+      "optional": true
+    }
   },
   "packageManager": "pnpm@10.34.4",
   "engines": {
-    "node": ">=18.0.0 || ^16.13.0",
-    "pnpm": "^10.27.0"
+    "node": ">=18.0.0 || ^16.13.0"
   },
   "publishConfig": {
     "access": "public",
