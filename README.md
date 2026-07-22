@@ -68,14 +68,30 @@ import { remarkBlockDirective } from 'remark-block-directive';
 import remarkDirective from 'remark-directive';
 import remarkFrontmatter from 'remark-frontmatter';
 import remarkMdx from 'remark-mdx';
+import remarkRehype from 'remark-rehype';
+import rehypeRaw from 'rehype-raw';
+import rehypeStringify from 'rehype-stringify';
 
 const markdownText = readFileSync('example.md', 'utf8');
 
+// MDX mode
 remark()
   .use(remarkFrontmatter, ['yaml'])
   .use(remarkMdx)
   .use(remarkDirective)
-  .use(remarkBlockDirective)
+  .use(remarkBlockDirective, { mode: 'mdx' })
+  .process(markdownText)
+  .then((file) => console.info(file))
+  .catch((error) => console.warn(error));
+
+// HTML mode
+remark()
+  .use(remarkFrontmatter, ['yaml'])
+  .use(remarkDirective)
+  .use(remarkBlockDirective, { mode: 'html' })
+  .use(remarkRehype, { allowDangerousHtml: true })
+  .use(rehypeRaw)
+  .use(rehypeStringify)
   .process(markdownText)
   .then((file) => console.info(file))
   .catch((error) => console.warn(error));

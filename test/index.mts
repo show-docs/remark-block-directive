@@ -6,7 +6,7 @@ import remarkDirective from 'remark-directive';
 import remarkMdx from 'remark-mdx';
 import { remarkBlockDirective } from '../lib/index.mjs';
 
-import { TransformSnapshot } from './helper/lib.mts';
+import { SnapshotParse, SnapshotTransform } from './helper/lib.mts';
 
 const fixtures = import.meta.glob('./fixture/*.md', {
   query: '?raw',
@@ -18,7 +18,12 @@ for (const [path, input] of Object.entries(fixtures)) {
   const name = path.replace(/^.*\//, '').replace(/\.md$/, '');
 
   test(name, async () => {
-    await TransformSnapshot(input);
+    // `input` / `ast` 与 mode 无关，只快照一次
+    await SnapshotParse(input);
+
+    for (const mode of ['mdx', 'html'] as const) {
+      await SnapshotTransform(input, mode);
+    }
   });
 }
 
