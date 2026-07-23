@@ -1,6 +1,6 @@
 {
   "name": "remark-block-directive",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Remark plugin for turning HTML directive into MDX tags",
   "license": "MIT",
   "author": {
@@ -42,8 +42,9 @@
     "lint:staged": "nice-move lint staged",
     "lint:type": "tsc -p tsconfig.json",
     "prepare": "nice-move git hooks",
-    "prepublishOnly": "pnpm run lint:staged && pnpm run lint:type && pnpm test",
+    "prepublishOnly": "pnpm run lint:staged && pnpm run lint:type && pnpm test && pnpm run build",
     "snapshot": "vitest run -u",
+    "pretest": "pnpm run build",
     "test": "vitest run"
   },
   "dependencies": {
@@ -55,7 +56,7 @@
     "@vitest/coverage-v8": "^4.1.10",
     "eslint": "^9.39.5",
     "garou": "^0.9.21",
-    "prettier": "~3.9.5",
+    "prettier": "~3.9.6",
     "remark": "^15.0.1",
     "remark-frontmatter": "^5.0.0",
     "remark-mdx": "^3.1.1",
