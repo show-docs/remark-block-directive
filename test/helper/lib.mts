@@ -7,25 +7,28 @@ import remarkMdx from 'remark-mdx';
 import { removePosition } from 'unist-util-remove-position';
 
 import { remarkBlockDirective } from '../../src/index.mts';
-import type { Node } from 'unist';
+import type { Nodes, RootContent } from 'mdast';
 
-function removePST(ast: Node) {
+/**
+ * 去除节点树中的位置信息，并返回其子节点列表（用于快照）。
+ */
+function removePST(ast: Nodes): RootContent[] {
   removePosition(ast, { force: true });
 
-  return (ast as any).children;
+  return 'children' in ast ? ast.children : [];
 }
 
 /**
  * 递归收集节点树中出现的所有节点类型，用于校验 mode 行为不变量。
  */
-function collectTypes(nodes: Node[]): string[] {
+function collectTypes(nodes: readonly RootContent[]): string[] {
   const types: string[] = [];
 
   for (const node of nodes) {
-    types.push((node as any).type);
+    types.push(node.type);
 
-    if ((node as any).children) {
-      types.push(...collectTypes((node as any).children));
+    if ('children' in node) {
+      types.push(...collectTypes(node.children));
     }
   }
 
@@ -33,9 +36,16 @@ function collectTypes(nodes: Node[]): string[] {
 }
 
 /**
- * 快照与 mode 无关的解析结果：`input` 与 `ast`（两种 mode 共用，避免重复快照）。
+ * 报告中的一个区块：标题 + 内容，用于拼接每个用例的独立快照文件。
  */
-export async function SnapshotParse(input: string) {
+function section(title: string, body: string): string {
+  return `=== ${title} ===\n\n${body.trim()}\n`;
+}
+
+/**
+ * 渲染与 mode 无关的解析结果：`input` 与 `ast`（两种 mode 共用，避免重复）。
+ */
+export function renderParse(input: string): string {
   const instance = remark()
     .use(remarkFrontmatter, ['yaml'])
     .use(remarkDirective)
@@ -43,13 +53,14 @@ export async function SnapshotParse(input: string) {
 
   const ast = instance.parse(input);
 
-  expect(input).toMatchSnapshot('input');
-  expect(removePST(ast)).toMatchSnapshot('ast');
+  return [
+    section('input', input),
+    section('ast', JSON.stringify(removePST(ast), null, 2)),
+  ].join('\n');
 }
 
 /**
- * 按 `mode` 快照转换结果：`parsed` / `output1` / `output2` 在快照名中带 mode 前缀，
- * 以便区分两种模式且不重复快照共享的 `input` / `ast`。
+ * 按 `mode` 渲染转换结果：`parsed` / `output1` / `output2` 区块带 mode 前缀。
  *
  * 同时校验行为不变量：单一 mode 下绝不出现另一 mode 专属的节点类型
  * （`html` 模式不含 `mdxJsxFlowElement`，`mdx` 模式不含 `html`）。
@@ -60,7 +71,10 @@ export async function SnapshotParse(input: string) {
  * `mdx` 模式需 `remark-mdx` 才能将 `mdxJsxFlowElement` 序列化为 HTML；
  * `html` 模式使用原生 `html` 节点，无需 `remark-mdx`。
  */
-export async function SnapshotTransform(input: string, mode: 'mdx' | 'html') {
+export async function renderTransform(
+  input: string,
+  mode: 'mdx' | 'html',
+): Promise<string> {
   const instance = remark()
     .use(remarkFrontmatter, ['yaml'])
     .use(remarkDirective)
@@ -71,7 +85,10 @@ export async function SnapshotTransform(input: string, mode: 'mdx' | 'html') {
   }
 
   const ast = instance.parse(input);
-  const tree = removePST(await instance.run(ast));
+  // `run` 就地变换并复用同一 `Root` 实例，故直接使用已知类型的 `ast`，
+  // 避免 `run` 返回的宽松 `Node` 类型需要断言。
+  await instance.run(ast);
+  const tree = removePST(ast);
 
   const types = collectTypes(tree);
 
@@ -82,17 +99,36 @@ export async function SnapshotTransform(input: string, mode: 'mdx' | 'html') {
     expect(types).not.toContain('html');
   }
 
-  expect(tree).toMatchSnapshot(`${mode} > parsed`);
-
   const output1 = await instance
     .process(input)
     .then((file) => file.toString().trim());
-
-  expect(output1).toMatchSnapshot(`${mode} > output1`);
 
   const output2 = await instance
     .process(output1)
     .then((file) => file.toString().trim());
 
-  expect(output2).toMatchSnapshot(`${mode} > output2`);
+  return [
+    section(`${mode} > parsed`, JSON.stringify(tree, null, 2)),
+    section(`${mode} > output1`, output1),
+    section(`${mode} > output2`, output2),
+  ].join('\n');
+}
+
+/**
+ * 为单个 fixture 生成完整报告并断言到独立快照文件
+ * `test/__snapshots__/<name>.md.snap`。
+ */
+export async function matchFixtureSnapshot(
+  name: string,
+  input: string,
+): Promise<void> {
+  const parts = [renderParse(input)];
+
+  for (const mode of ['mdx', 'html'] as const) {
+    parts.push(await renderTransform(input, mode));
+  }
+
+  await expect(parts.join('\n')).toMatchFileSnapshot(
+    `./__snapshots__/${name}.md.snap`,
+  );
 }

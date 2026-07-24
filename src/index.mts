@@ -1,36 +1,33 @@
 import YAML from 'yaml';
 
 import type { MdxJsxAttribute } from 'mdast-util-mdx-jsx';
-import type { Root, RootContent } from 'mdast';
+import type { Root, RootContent, Yaml } from 'mdast';
 
-/** 转换模式。 */
 type Mode = 'mdx' | 'html';
 
-/** directive 属性值类型（`remark-directive` 允许 `null`/`undefined` 空值）。 */
 type DirectiveAttributes = Record<string, string | null | undefined>;
 
 /**
- * 可被本插件处理的任意 mdast 节点的递归形态，用于遍历异构的 mdast 子树。
+ * 用于遍历/改写异构 mdast 子树的宽松节点形态：字段全部可选，
+ * 避免联合类型在 spread 时的协变难题（不同节点的子节点类型各异）。
  */
-type AnyNode = {
+type MdNode = {
   type: string;
   name?: string | null;
   attributes?: unknown;
-  children?: AnyNode[];
+  children?: MdNode[];
   value?: string;
   data?: unknown;
 };
 
-/** 待转换的 HTML 标签型 containerDirective（属性已是 `Record` 形态）。 */
-interface DirectiveNode {
+type DirectiveNode = MdNode & {
   type: 'containerDirective';
   name: string;
-  attributes?: DirectiveAttributes;
-  children: AnyNode[];
-  data?: unknown;
-}
+  attributes?: DirectiveAttributes | null;
+  children: MdNode[];
+};
 
-/** 会被转换为对应 `mdxJsxFlowElement` 的 HTML 标签型 containerDirective。 */
+/** 可转换为标签的 containerDirective 名称。 */
 const convertibleTags = [
   'article',
   'aside',
@@ -44,11 +41,7 @@ const convertibleTags = [
   'summary',
 ];
 
-/**
- * 允许按 `---` 分割线断开分页的容器。
- * 与 {@link convertibleTags} 解耦，便于单独控制哪些标签参与分页
- * （例如结构性标签 `summary` 可视需要移出本列表）。
- */
+/** 允许按 `---` 分页拆分的容器（与 {@link convertibleTags} 解耦）。 */
 const splittableTags = [
   'article',
   'aside',
@@ -60,9 +53,6 @@ const splittableTags = [
   'section',
 ];
 
-/**
- * 将 `className`/`id` 属性值转义，避免在 `mode: 'html'` 下输出非法 HTML。
- */
 function escapeHtml(value: string): string {
   return String(value)
     .replaceAll('&', '&amp;')
@@ -71,57 +61,95 @@ function escapeHtml(value: string): string {
     .replaceAll('"', '&quot;');
 }
 
-/**
- * 读取顶层首个 frontmatter（`yaml` 节点）中的配置。
- * 仅取首个，忽略后续/嵌套出现的 frontmatter。
- */
-function readConfig(tree: Root): { blockBreak?: boolean } {
-  const node = tree.children.find((child) => child.type === 'yaml');
+interface Config {
+  blockBreak?: boolean;
+  pageBreak?: string;
+}
 
-  if (!node || node.value == null) {
+/** 读取顶层首个 `yaml` frontmatter 中的 `blockBreak` / `pageBreak` 配置。 */
+function readConfig(tree: Root): Config {
+  const node = tree.children.find(
+    (child): child is Yaml => child.type === 'yaml',
+  );
+
+  if (!node) {
     return {};
   }
 
+  let parsed: unknown;
+
   try {
-    return (YAML.parse(node.value) ?? {}) as { blockBreak?: boolean };
+    parsed = YAML.parse(node.value);
   } catch {
     // ignore invalid yaml
     return {};
   }
+
+  if (typeof parsed !== 'object' || parsed === null) {
+    return {};
+  }
+
+  const config: Config = {};
+
+  if ('blockBreak' in parsed && typeof parsed.blockBreak === 'boolean') {
+    config.blockBreak = parsed.blockBreak;
+  }
+
+  if ('pageBreak' in parsed && typeof parsed.pageBreak === 'string') {
+    config.pageBreak = parsed.pageBreak;
+  }
+
+  return config;
 }
 
-/**
- * 按 `---` 分割线将容器拆分为多个同型容器。
- * 若无分割线则返回原节点（单元素数组），保持调用方统一处理。
- */
-function splitByBreak(node: DirectiveNode): DirectiveNode[] {
-  const parts: AnyNode[][] = [];
-  let current: AnyNode[] = [];
+/** 按 `---`（thematicBreak）将节点序列拆分为若干段。 */
+function splitByThematicBreak(nodes: MdNode[]): MdNode[][] {
+  const groups: MdNode[][] = [];
+  let current: MdNode[] = [];
 
-  for (const child of node.children) {
-    if (child.type === 'thematicBreak') {
-      parts.push(current);
+  for (const node of nodes) {
+    if (node.type === 'thematicBreak') {
+      groups.push(current);
       current = [];
     } else {
-      current.push(child);
+      current.push(node);
     }
   }
 
-  parts.push(current);
+  groups.push(current);
 
-  if (parts.length === 1) {
-    return [node];
-  }
-
-  return parts
-    .filter((part) => part.length > 0)
-    .map((children) => ({ ...node, children }));
+  return groups;
 }
 
-/**
- * 将 HTML 标签型 containerDirective 转换为 `mdxJsxFlowElement`（MDX 体系）。
- */
-function toMdxJsx(node: DirectiveNode): AnyNode[] {
+/** 类型守卫：判断节点是否为可转换的 containerDirective。 */
+function isContainerDirective(node: MdNode): node is DirectiveNode {
+  return node.type === 'containerDirective' && typeof node.name === 'string';
+}
+
+/** 将 containerDirective 按 `mode` 转换为 `mdxJsxFlowElement` 或原生 `html` 节点。 */
+function convertDirective(node: DirectiveNode, mode: Mode): MdNode[] {
+  if (mode === 'html') {
+    const attrs: string[] = [];
+
+    const className = node.attributes?.class;
+    if (className) {
+      attrs.push(`class="${escapeHtml(className)}"`);
+    }
+
+    const id = node.attributes?.id;
+    if (id) {
+      attrs.push(`id="${escapeHtml(id)}"`);
+    }
+
+    const open = `<${node.name}${attrs.length > 0 ? ` ${attrs.join(' ')}` : ''}>`;
+
+    return [
+      { type: 'html', value: open },
+      ...node.children,
+      { type: 'html', value: `</${node.name}>` },
+    ];
+  }
+
   const candidates: MdxJsxAttribute[] = [
     {
       type: 'mdxJsxAttribute',
@@ -143,66 +171,32 @@ function toMdxJsx(node: DirectiveNode): AnyNode[] {
 }
 
 /**
- * 将 HTML 标签型 containerDirective 转换为一组原生 `html` 节点
- * （开标签 + 子节点 + 闭标签），以便在纯 remark-rehype 体系下无需 MDX 即可渲染。
- */
-function toHtmlFlow(node: DirectiveNode): AnyNode[] {
-  const attrs: string[] = [];
-
-  const className = node.attributes?.class;
-  if (className) {
-    attrs.push(`class="${escapeHtml(className)}"`);
-  }
-
-  const id = node.attributes?.id;
-  if (id) {
-    attrs.push(`id="${escapeHtml(id)}"`);
-  }
-
-  const open = `<${node.name}${attrs.length > 0 ? ` ${attrs.join(' ')}` : ''}>`;
-
-  return [
-    { type: 'html', value: open },
-    ...node.children,
-    { type: 'html', value: `</${node.name}>` },
-  ];
-}
-
-/** 类型守卫：判断节点是否为可转换的 containerDirective。 */
-function isContainerDirective(node: AnyNode): node is DirectiveNode {
-  return node.type === 'containerDirective' && typeof node.name === 'string';
-}
-
-/**
- * 递归遍历节点列表：先处理子节点，再将 HTML 标签型 `containerDirective`
- * 按 `mode` 转换为目标节点；若开启分页且标签可分页，则先按 `---` 拆分为多个容器。
- *
- * 通过单次遍历同时完成「子节点转换 → 分页拆分 → 节点转换」，
- * 替代原先 `splitTree` 与 `transformNodes` 的两次独立递归。
+ * 递归转换：先处理子节点，再将可转换的 `containerDirective` 按 `mode` 转换；
+ * 若开启 `blockBreak` 且标签可分页，则先按 `---` 拆分为多个同型容器。
  */
 function transformNodes(
-  nodes: AnyNode[],
-  context: { mode: Mode; pageBreak: boolean },
-): AnyNode[] {
-  const result: AnyNode[] = [];
+  nodes: MdNode[],
+  context: { mode: Mode; blockBreak: boolean },
+): MdNode[] {
+  const result: MdNode[] = [];
 
   for (const node of nodes) {
     const children = node.children
       ? transformNodes(node.children, context)
       : [];
-    const current: AnyNode = node.children ? { ...node, children } : node;
+    const current: MdNode = node.children ? { ...node, children } : node;
 
     if (isContainerDirective(node) && convertibleTags.includes(node.name)) {
       const source: DirectiveNode = { ...node, children };
       const parts: DirectiveNode[] =
-        context.pageBreak && splittableTags.includes(node.name)
-          ? splitByBreak(source)
+        context.blockBreak && splittableTags.includes(node.name)
+          ? splitByThematicBreak(children)
+              .filter((part) => part.length > 0)
+              .map((part) => ({ ...source, children: part }))
           : [source];
 
       for (const part of parts) {
-        result.push(
-          ...(context.mode === 'html' ? toHtmlFlow(part) : toMdxJsx(part)),
-        );
+        result.push(...convertDirective(part, context.mode));
       }
     } else {
       result.push(current);
@@ -213,8 +207,66 @@ function transformNodes(
 }
 
 /**
+ * 在 root 级别按 `---` 分页：将每段内容包裹进 `div{.<className>}`。
+ * 顶层 `yaml`（frontmatter）与 `mdxjsEsm`（`import`/`export`）被保留在包裹层之外。
+ * 仅当存在 root 级分割线时才包裹，保证重复处理幂等。
+ */
+function applyPageBreak(
+  nodes: MdNode[],
+  className: string,
+  mode: Mode,
+): MdNode[] {
+  const leading: MdNode[] = [];
+  let start = 0;
+  for (const node of nodes) {
+    if (node.type === 'yaml') {
+      leading.push(node);
+      start++;
+    } else {
+      break;
+    }
+  }
+
+  const esm: MdNode[] = [];
+  const body: MdNode[] = [];
+  for (const node of nodes.slice(start)) {
+    if (node.type === 'mdxjsEsm') {
+      esm.push(node);
+    } else {
+      body.push(node);
+    }
+  }
+
+  const sections = splitByThematicBreak(body).filter(
+    (section) => section.length > 0,
+  );
+
+  // 无 root 级分割线则不包裹，保持幂等
+  if (sections.length <= 1) {
+    return nodes;
+  }
+
+  const wrapped = sections.flatMap((section) =>
+    convertDirective(
+      {
+        type: 'containerDirective',
+        name: 'div',
+        attributes: { class: className },
+        children: section,
+      },
+      mode,
+    ),
+  );
+
+  return [...leading, ...esm, ...wrapped];
+}
+
+/**
  * 将 HTML 标签型 containerDirective 转换为 MDX 标签或原生 `html` 节点，
- * 并按 frontmatter 中的 `blockBreak` 配置对容器按 `---` 分割线分页。
+ * 并按 frontmatter 中的 `blockBreak` / `pageBreak` 配置进行分页：
+ *
+ * - `blockBreak: true`：对容器指令**内部**的 `---` 分页。
+ * - `pageBreak: <class>`：对 root 级别（容器外部）的 `---` 分页，每段包裹进 `div{.<class>}`。
  *
  * @param mode 转换模式。
  *   - `'mdx'`（默认）：转换为 `mdxJsxFlowElement`，需配合 `remark-mdx` 使用。
@@ -223,15 +275,24 @@ function transformNodes(
  *
  * @remarks
  * 前置依赖：管道中必须在本插件之前接入 frontmatter 解析器（如 `remark-frontmatter`），
- * 否则 AST 中不会存在 `yaml` 节点，`blockBreak` 配置将无法被读取（详情见 README）。
+ * 否则 AST 中不会存在 `yaml` 节点，`blockBreak` / `pageBreak` 配置将无法被读取（详情见 README）。
  */
 function transform(tree: Root, mode: Mode = 'mdx'): void {
-  const config = readConfig(tree);
+  const { blockBreak, pageBreak } = readConfig(tree);
 
-  tree.children = transformNodes(tree.children, {
+  // 入口边界断言：将严格类型的 `RootContent[]` 收敛为内部宽松的 `MdNode[]`。
+  let children = transformNodes(tree.children as MdNode[], {
     mode,
-    pageBreak: config.blockBreak === true,
-  }) as RootContent[];
+    blockBreak: blockBreak === true,
+  });
+
+  if (typeof pageBreak === 'string' && pageBreak.length > 0) {
+    children = applyPageBreak(children, pageBreak, mode);
+  }
+
+  // 唯一的类型断言：手工构造/搬运的 mdast 节点结构上均为合法 `RootContent`，
+  // 此处将内部宽松的 `MdNode[]` 收敛回 `RootContent[]`。
+  tree.children = children as RootContent[];
 }
 
 interface Options {

@@ -1,0 +1,135 @@
+=== input ===
+
+:::::::details
+
+::::::summary
+abc
+::::::
+
+:::::::
+
+=== ast ===
+
+[
+  {
+    "type": "containerDirective",
+    "name": "details",
+    "attributes": {},
+    "children": [
+      {
+        "type": "containerDirective",
+        "name": "summary",
+        "attributes": {},
+        "children": [
+          {
+            "type": "paragraph",
+            "children": [
+              {
+                "type": "text",
+                "value": "abc"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > parsed ===
+
+[
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "details",
+    "attributes": [],
+    "children": [
+      {
+        "type": "mdxJsxFlowElement",
+        "name": "summary",
+        "attributes": [],
+        "children": [
+          {
+            "type": "paragraph",
+            "children": [
+              {
+                "type": "text",
+                "value": "abc"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > output1 ===
+
+<details>
+  <summary>
+    abc
+  </summary>
+</details>
+
+=== mdx > output2 ===
+
+<details>
+  <summary>
+    abc
+  </summary>
+</details>
+
+=== html > parsed ===
+
+[
+  {
+    "type": "html",
+    "value": "<details>"
+  },
+  {
+    "type": "html",
+    "value": "<summary>"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "abc"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</summary>"
+  },
+  {
+    "type": "html",
+    "value": "</details>"
+  }
+]
+
+=== html > output1 ===
+
+<details>
+
+<summary>
+
+abc
+
+</summary>
+
+</details>
+
+=== html > output2 ===
+
+<details>
+
+<summary>
+
+abc
+
+</summary>
+
+</details>

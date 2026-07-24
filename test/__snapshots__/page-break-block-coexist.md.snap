@@ -1,0 +1,313 @@
+=== input ===
+
+---
+blockBreak: true
+pageBreak: a4
+---
+
+:::div
+
+A
+
+---
+
+B
+
+::::
+
+---
+
+X
+
+=== ast ===
+
+[
+  {
+    "type": "yaml",
+    "value": "blockBreak: true\npageBreak: a4"
+  },
+  {
+    "type": "containerDirective",
+    "name": "div",
+    "attributes": {},
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "A"
+          }
+        ]
+      },
+      {
+        "type": "thematicBreak"
+      },
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "B"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "thematicBreak"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "X"
+      }
+    ]
+  }
+]
+
+=== mdx > parsed ===
+
+[
+  {
+    "type": "yaml",
+    "value": "blockBreak: true\npageBreak: a4"
+  },
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "div",
+    "attributes": [
+      {
+        "type": "mdxJsxAttribute",
+        "name": "className",
+        "value": "a4"
+      }
+    ],
+    "children": [
+      {
+        "type": "mdxJsxFlowElement",
+        "name": "div",
+        "attributes": [],
+        "children": [
+          {
+            "type": "paragraph",
+            "children": [
+              {
+                "type": "text",
+                "value": "A"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "mdxJsxFlowElement",
+        "name": "div",
+        "attributes": [],
+        "children": [
+          {
+            "type": "paragraph",
+            "children": [
+              {
+                "type": "text",
+                "value": "B"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "div",
+    "attributes": [
+      {
+        "type": "mdxJsxAttribute",
+        "name": "className",
+        "value": "a4"
+      }
+    ],
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "X"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > output1 ===
+
+---
+blockBreak: true
+pageBreak: a4
+---
+
+<div className="a4">
+  <div>
+    A
+  </div>
+
+  <div>
+    B
+  </div>
+</div>
+
+<div className="a4">
+  X
+</div>
+
+=== mdx > output2 ===
+
+---
+blockBreak: true
+pageBreak: a4
+---
+
+<div className="a4">
+  <div>
+    A
+  </div>
+
+  <div>
+    B
+  </div>
+</div>
+
+<div className="a4">
+  X
+</div>
+
+=== html > parsed ===
+
+[
+  {
+    "type": "yaml",
+    "value": "blockBreak: true\npageBreak: a4"
+  },
+  {
+    "type": "html",
+    "value": "<div class=\"a4\">"
+  },
+  {
+    "type": "html",
+    "value": "<div>"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "A"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</div>"
+  },
+  {
+    "type": "html",
+    "value": "<div>"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "B"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</div>"
+  },
+  {
+    "type": "html",
+    "value": "</div>"
+  },
+  {
+    "type": "html",
+    "value": "<div class=\"a4\">"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "X"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</div>"
+  }
+]
+
+=== html > output1 ===
+
+---
+blockBreak: true
+pageBreak: a4
+---
+
+<div class="a4">
+
+<div>
+
+A
+
+</div>
+
+<div>
+
+B
+
+</div>
+
+</div>
+
+<div class="a4">
+
+X
+
+</div>
+
+=== html > output2 ===
+
+---
+blockBreak: true
+pageBreak: a4
+---
+
+<div class="a4">
+
+<div>
+
+A
+
+</div>
+
+<div>
+
+B
+
+</div>
+
+</div>
+
+<div class="a4">
+
+X
+
+</div>

@@ -1,0 +1,113 @@
+=== input ===
+
+::::::div{#id.class}
+
+abc
+
+::::::
+
+=== ast ===
+
+[
+  {
+    "type": "containerDirective",
+    "name": "div",
+    "attributes": {
+      "id": "id",
+      "class": "class"
+    },
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "abc"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > parsed ===
+
+[
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "div",
+    "attributes": [
+      {
+        "type": "mdxJsxAttribute",
+        "name": "className",
+        "value": "class"
+      },
+      {
+        "type": "mdxJsxAttribute",
+        "name": "id",
+        "value": "id"
+      }
+    ],
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "abc"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > output1 ===
+
+<div className="class" id="id">
+  abc
+</div>
+
+=== mdx > output2 ===
+
+<div className="class" id="id">
+  abc
+</div>
+
+=== html > parsed ===
+
+[
+  {
+    "type": "html",
+    "value": "<div class=\"class\" id=\"id\">"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "abc"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</div>"
+  }
+]
+
+=== html > output1 ===
+
+<div class="class" id="id">
+
+abc
+
+</div>
+
+=== html > output2 ===
+
+<div class="class" id="id">
+
+abc
+
+</div>

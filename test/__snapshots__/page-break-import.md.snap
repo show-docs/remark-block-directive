@@ -1,0 +1,460 @@
+=== input ===
+
+---
+pageBreak: a4
+---
+
+import Foo from './foo.mdx';
+
+A
+
+---
+
+B
+
+=== ast ===
+
+[
+  {
+    "type": "yaml",
+    "value": "pageBreak: a4"
+  },
+  {
+    "type": "mdxjsEsm",
+    "value": "import Foo from './foo.mdx';",
+    "data": {
+      "estree": {
+        "type": "Program",
+        "start": 23,
+        "end": 51,
+        "loc": {
+          "start": {
+            "line": 5,
+            "column": 0,
+            "offset": 23
+          },
+          "end": {
+            "line": 5,
+            "column": 28,
+            "offset": 51
+          }
+        },
+        "body": [
+          {
+            "type": "ImportDeclaration",
+            "start": 23,
+            "end": 51,
+            "loc": {
+              "start": {
+                "line": 5,
+                "column": 0,
+                "offset": 23
+              },
+              "end": {
+                "line": 5,
+                "column": 28,
+                "offset": 51
+              }
+            },
+            "specifiers": [
+              {
+                "type": "ImportDefaultSpecifier",
+                "start": 30,
+                "end": 33,
+                "loc": {
+                  "start": {
+                    "line": 5,
+                    "column": 7,
+                    "offset": 30
+                  },
+                  "end": {
+                    "line": 5,
+                    "column": 10,
+                    "offset": 33
+                  }
+                },
+                "local": {
+                  "type": "Identifier",
+                  "start": 30,
+                  "end": 33,
+                  "loc": {
+                    "start": {
+                      "line": 5,
+                      "column": 7,
+                      "offset": 30
+                    },
+                    "end": {
+                      "line": 5,
+                      "column": 10,
+                      "offset": 33
+                    }
+                  },
+                  "name": "Foo",
+                  "range": [
+                    30,
+                    33
+                  ]
+                },
+                "range": [
+                  30,
+                  33
+                ]
+              }
+            ],
+            "source": {
+              "type": "Literal",
+              "start": 39,
+              "end": 50,
+              "loc": {
+                "start": {
+                  "line": 5,
+                  "column": 16,
+                  "offset": 39
+                },
+                "end": {
+                  "line": 5,
+                  "column": 27,
+                  "offset": 50
+                }
+              },
+              "value": "./foo.mdx",
+              "raw": "'./foo.mdx'",
+              "range": [
+                39,
+                50
+              ]
+            },
+            "range": [
+              23,
+              51
+            ]
+          }
+        ],
+        "sourceType": "module",
+        "comments": [],
+        "range": [
+          23,
+          51
+        ]
+      }
+    }
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "A"
+      }
+    ]
+  },
+  {
+    "type": "thematicBreak"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "B"
+      }
+    ]
+  }
+]
+
+=== mdx > parsed ===
+
+[
+  {
+    "type": "yaml",
+    "value": "pageBreak: a4"
+  },
+  {
+    "type": "mdxjsEsm",
+    "value": "import Foo from './foo.mdx';",
+    "data": {
+      "estree": {
+        "type": "Program",
+        "start": 23,
+        "end": 51,
+        "loc": {
+          "start": {
+            "line": 5,
+            "column": 0,
+            "offset": 23
+          },
+          "end": {
+            "line": 5,
+            "column": 28,
+            "offset": 51
+          }
+        },
+        "body": [
+          {
+            "type": "ImportDeclaration",
+            "start": 23,
+            "end": 51,
+            "loc": {
+              "start": {
+                "line": 5,
+                "column": 0,
+                "offset": 23
+              },
+              "end": {
+                "line": 5,
+                "column": 28,
+                "offset": 51
+              }
+            },
+            "specifiers": [
+              {
+                "type": "ImportDefaultSpecifier",
+                "start": 30,
+                "end": 33,
+                "loc": {
+                  "start": {
+                    "line": 5,
+                    "column": 7,
+                    "offset": 30
+                  },
+                  "end": {
+                    "line": 5,
+                    "column": 10,
+                    "offset": 33
+                  }
+                },
+                "local": {
+                  "type": "Identifier",
+                  "start": 30,
+                  "end": 33,
+                  "loc": {
+                    "start": {
+                      "line": 5,
+                      "column": 7,
+                      "offset": 30
+                    },
+                    "end": {
+                      "line": 5,
+                      "column": 10,
+                      "offset": 33
+                    }
+                  },
+                  "name": "Foo",
+                  "range": [
+                    30,
+                    33
+                  ]
+                },
+                "range": [
+                  30,
+                  33
+                ]
+              }
+            ],
+            "source": {
+              "type": "Literal",
+              "start": 39,
+              "end": 50,
+              "loc": {
+                "start": {
+                  "line": 5,
+                  "column": 16,
+                  "offset": 39
+                },
+                "end": {
+                  "line": 5,
+                  "column": 27,
+                  "offset": 50
+                }
+              },
+              "value": "./foo.mdx",
+              "raw": "'./foo.mdx'",
+              "range": [
+                39,
+                50
+              ]
+            },
+            "range": [
+              23,
+              51
+            ]
+          }
+        ],
+        "sourceType": "module",
+        "comments": [],
+        "range": [
+          23,
+          51
+        ]
+      }
+    }
+  },
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "div",
+    "attributes": [
+      {
+        "type": "mdxJsxAttribute",
+        "name": "className",
+        "value": "a4"
+      }
+    ],
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "A"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "div",
+    "attributes": [
+      {
+        "type": "mdxJsxAttribute",
+        "name": "className",
+        "value": "a4"
+      }
+    ],
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "B"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > output1 ===
+
+---
+pageBreak: a4
+---
+
+import Foo from './foo.mdx';
+
+<div className="a4">
+  A
+</div>
+
+<div className="a4">
+  B
+</div>
+
+=== mdx > output2 ===
+
+---
+pageBreak: a4
+---
+
+import Foo from './foo.mdx';
+
+<div className="a4">
+  A
+</div>
+
+<div className="a4">
+  B
+</div>
+
+=== html > parsed ===
+
+[
+  {
+    "type": "yaml",
+    "value": "pageBreak: a4"
+  },
+  {
+    "type": "html",
+    "value": "<div class=\"a4\">"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "import Foo from './foo.mdx';"
+      }
+    ]
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "A"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</div>"
+  },
+  {
+    "type": "html",
+    "value": "<div class=\"a4\">"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "B"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</div>"
+  }
+]
+
+=== html > output1 ===
+
+---
+pageBreak: a4
+---
+
+<div class="a4">
+
+import Foo from './foo.mdx';
+
+A
+
+</div>
+
+<div class="a4">
+
+B
+
+</div>
+
+=== html > output2 ===
+
+---
+pageBreak: a4
+---
+
+<div class="a4">
+
+import Foo from './foo.mdx';
+
+A
+
+</div>
+
+<div class="a4">
+
+B
+
+</div>

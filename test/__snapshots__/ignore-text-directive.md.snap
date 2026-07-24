@@ -1,0 +1,94 @@
+=== input ===
+
+::::::text
+
+abc
+
+::::::
+
+=== ast ===
+
+[
+  {
+    "type": "containerDirective",
+    "name": "text",
+    "attributes": {},
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "abc"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > parsed ===
+
+[
+  {
+    "type": "containerDirective",
+    "name": "text",
+    "attributes": {},
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "abc"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > output1 ===
+
+:::text
+abc
+:::
+
+=== mdx > output2 ===
+
+:::text
+abc
+:::
+
+=== html > parsed ===
+
+[
+  {
+    "type": "containerDirective",
+    "name": "text",
+    "attributes": {},
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "abc"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== html > output1 ===
+
+:::text
+abc
+:::
+
+=== html > output2 ===
+
+:::text
+abc
+:::

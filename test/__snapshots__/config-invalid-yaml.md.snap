@@ -1,0 +1,136 @@
+=== input ===
+
+---
+blockBreak: true
+	foo: bar
+---
+
+::::div
+
+A
+
+::::
+
+=== ast ===
+
+[
+  {
+    "type": "yaml",
+    "value": "blockBreak: true\n\tfoo: bar"
+  },
+  {
+    "type": "containerDirective",
+    "name": "div",
+    "attributes": {},
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "A"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > parsed ===
+
+[
+  {
+    "type": "yaml",
+    "value": "blockBreak: true\n\tfoo: bar"
+  },
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "div",
+    "attributes": [],
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "A"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > output1 ===
+
+---
+blockBreak: true
+	foo: bar
+---
+
+<div>
+  A
+</div>
+
+=== mdx > output2 ===
+
+---
+blockBreak: true
+	foo: bar
+---
+
+<div>
+  A
+</div>
+
+=== html > parsed ===
+
+[
+  {
+    "type": "yaml",
+    "value": "blockBreak: true\n\tfoo: bar"
+  },
+  {
+    "type": "html",
+    "value": "<div>"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "A"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</div>"
+  }
+]
+
+=== html > output1 ===
+
+---
+blockBreak: true
+	foo: bar
+---
+
+<div>
+
+A
+
+</div>
+
+=== html > output2 ===
+
+---
+blockBreak: true
+	foo: bar
+---
+
+<div>
+
+A
+
+</div>

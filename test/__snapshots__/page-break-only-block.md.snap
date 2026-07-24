@@ -1,0 +1,205 @@
+=== input ===
+
+---
+blockBreak: true
+pageBreak: a4
+---
+
+:::div
+
+A
+
+---
+
+B
+
+::::
+
+=== ast ===
+
+[
+  {
+    "type": "yaml",
+    "value": "blockBreak: true\npageBreak: a4"
+  },
+  {
+    "type": "containerDirective",
+    "name": "div",
+    "attributes": {},
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "A"
+          }
+        ]
+      },
+      {
+        "type": "thematicBreak"
+      },
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "B"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > parsed ===
+
+[
+  {
+    "type": "yaml",
+    "value": "blockBreak: true\npageBreak: a4"
+  },
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "div",
+    "attributes": [],
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "A"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "div",
+    "attributes": [],
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "B"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > output1 ===
+
+---
+blockBreak: true
+pageBreak: a4
+---
+
+<div>
+  A
+</div>
+
+<div>
+  B
+</div>
+
+=== mdx > output2 ===
+
+---
+blockBreak: true
+pageBreak: a4
+---
+
+<div>
+  A
+</div>
+
+<div>
+  B
+</div>
+
+=== html > parsed ===
+
+[
+  {
+    "type": "yaml",
+    "value": "blockBreak: true\npageBreak: a4"
+  },
+  {
+    "type": "html",
+    "value": "<div>"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "A"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</div>"
+  },
+  {
+    "type": "html",
+    "value": "<div>"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "B"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</div>"
+  }
+]
+
+=== html > output1 ===
+
+---
+blockBreak: true
+pageBreak: a4
+---
+
+<div>
+
+A
+
+</div>
+
+<div>
+
+B
+
+</div>
+
+=== html > output2 ===
+
+---
+blockBreak: true
+pageBreak: a4
+---
+
+<div>
+
+A
+
+</div>
+
+<div>
+
+B
+
+</div>

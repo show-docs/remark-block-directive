@@ -1,0 +1,126 @@
+=== input ===
+
+---
+---
+
+::::div
+
+A
+
+::::
+
+=== ast ===
+
+[
+  {
+    "type": "yaml",
+    "value": ""
+  },
+  {
+    "type": "containerDirective",
+    "name": "div",
+    "attributes": {},
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "A"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > parsed ===
+
+[
+  {
+    "type": "yaml",
+    "value": ""
+  },
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "div",
+    "attributes": [],
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "A"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > output1 ===
+
+---
+---
+
+<div>
+  A
+</div>
+
+=== mdx > output2 ===
+
+---
+---
+
+<div>
+  A
+</div>
+
+=== html > parsed ===
+
+[
+  {
+    "type": "yaml",
+    "value": ""
+  },
+  {
+    "type": "html",
+    "value": "<div>"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "A"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</div>"
+  }
+]
+
+=== html > output1 ===
+
+---
+---
+
+<div>
+
+A
+
+</div>
+
+=== html > output2 ===
+
+---
+---
+
+<div>
+
+A
+
+</div>

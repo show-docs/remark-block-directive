@@ -1,0 +1,276 @@
+=== input ===
+
+---
+pageBreak: a4
+---
+
+A
+
+---
+
+B
+
+---
+
+C
+
+=== ast ===
+
+[
+  {
+    "type": "yaml",
+    "value": "pageBreak: a4"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "A"
+      }
+    ]
+  },
+  {
+    "type": "thematicBreak"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "B"
+      }
+    ]
+  },
+  {
+    "type": "thematicBreak"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "C"
+      }
+    ]
+  }
+]
+
+=== mdx > parsed ===
+
+[
+  {
+    "type": "yaml",
+    "value": "pageBreak: a4"
+  },
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "div",
+    "attributes": [
+      {
+        "type": "mdxJsxAttribute",
+        "name": "className",
+        "value": "a4"
+      }
+    ],
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "A"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "div",
+    "attributes": [
+      {
+        "type": "mdxJsxAttribute",
+        "name": "className",
+        "value": "a4"
+      }
+    ],
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "B"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "div",
+    "attributes": [
+      {
+        "type": "mdxJsxAttribute",
+        "name": "className",
+        "value": "a4"
+      }
+    ],
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "C"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > output1 ===
+
+---
+pageBreak: a4
+---
+
+<div className="a4">
+  A
+</div>
+
+<div className="a4">
+  B
+</div>
+
+<div className="a4">
+  C
+</div>
+
+=== mdx > output2 ===
+
+---
+pageBreak: a4
+---
+
+<div className="a4">
+  A
+</div>
+
+<div className="a4">
+  B
+</div>
+
+<div className="a4">
+  C
+</div>
+
+=== html > parsed ===
+
+[
+  {
+    "type": "yaml",
+    "value": "pageBreak: a4"
+  },
+  {
+    "type": "html",
+    "value": "<div class=\"a4\">"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "A"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</div>"
+  },
+  {
+    "type": "html",
+    "value": "<div class=\"a4\">"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "B"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</div>"
+  },
+  {
+    "type": "html",
+    "value": "<div class=\"a4\">"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "C"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</div>"
+  }
+]
+
+=== html > output1 ===
+
+---
+pageBreak: a4
+---
+
+<div class="a4">
+
+A
+
+</div>
+
+<div class="a4">
+
+B
+
+</div>
+
+<div class="a4">
+
+C
+
+</div>
+
+=== html > output2 ===
+
+---
+pageBreak: a4
+---
+
+<div class="a4">
+
+A
+
+</div>
+
+<div class="a4">
+
+B
+
+</div>
+
+<div class="a4">
+
+C
+
+</div>

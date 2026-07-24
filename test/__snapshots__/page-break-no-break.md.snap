@@ -1,0 +1,130 @@
+=== input ===
+
+---
+pageBreak: a4
+---
+
+A
+
+B
+
+=== ast ===
+
+[
+  {
+    "type": "yaml",
+    "value": "pageBreak: a4"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "A"
+      }
+    ]
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "B"
+      }
+    ]
+  }
+]
+
+=== mdx > parsed ===
+
+[
+  {
+    "type": "yaml",
+    "value": "pageBreak: a4"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "A"
+      }
+    ]
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "B"
+      }
+    ]
+  }
+]
+
+=== mdx > output1 ===
+
+---
+pageBreak: a4
+---
+
+A
+
+B
+
+=== mdx > output2 ===
+
+---
+pageBreak: a4
+---
+
+A
+
+B
+
+=== html > parsed ===
+
+[
+  {
+    "type": "yaml",
+    "value": "pageBreak: a4"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "A"
+      }
+    ]
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "B"
+      }
+    ]
+  }
+]
+
+=== html > output1 ===
+
+---
+pageBreak: a4
+---
+
+A
+
+B
+
+=== html > output2 ===
+
+---
+pageBreak: a4
+---
+
+A
+
+B
