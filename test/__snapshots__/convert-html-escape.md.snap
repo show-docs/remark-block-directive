@@ -1,0 +1,111 @@
+=== input ===
+
+:::div{class="a<b>c&d" id="x<y>"}
+text
+:::
+
+=== ast ===
+
+[
+  {
+    "type": "containerDirective",
+    "name": "div",
+    "attributes": {
+      "class": "a<b>c&d",
+      "id": "x<y>"
+    },
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "text"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > parsed ===
+
+[
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "div",
+    "attributes": [
+      {
+        "type": "mdxJsxAttribute",
+        "name": "className",
+        "value": "a<b>c&d"
+      },
+      {
+        "type": "mdxJsxAttribute",
+        "name": "id",
+        "value": "x<y>"
+      }
+    ],
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "text"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > output1 ===
+
+<div className="a<b>c&d" id="x<y>">
+  text
+</div>
+
+=== mdx > output2 ===
+
+<div className="a<b>c&d" id="x<y>">
+  text
+</div>
+
+=== html > parsed ===
+
+[
+  {
+    "type": "html",
+    "value": "<div class=\"a&lt;b&gt;c&amp;d\" id=\"x&lt;y&gt;\">"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "text"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</div>"
+  }
+]
+
+=== html > output1 ===
+
+<div class="a&lt;b&gt;c&amp;d" id="x&lt;y&gt;">
+
+text
+
+</div>
+
+=== html > output2 ===
+
+<div class="a&lt;b&gt;c&amp;d" id="x&lt;y&gt;">
+
+text
+
+</div>

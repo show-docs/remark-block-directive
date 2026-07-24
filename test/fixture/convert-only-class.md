@@ -1,0 +1,3 @@
+:::div{.only-class}
+text
+:::

@@ -1,16 +1,11 @@
 ---
 blockBreak: true
-pageBreak: a4
 ---
 
-:::div
-
-# 区块
-
+:::summary
 A
 
 ---
 
 B
-
 :::

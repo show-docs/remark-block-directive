@@ -1,0 +1,155 @@
+=== input ===
+
+---
+pageBreak: 123
+---
+
+# 首页
+
+---
+
+# 第 2 页
+
+=== ast ===
+
+[
+  {
+    "type": "yaml",
+    "value": "pageBreak: 123"
+  },
+  {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "首页"
+      }
+    ]
+  },
+  {
+    "type": "thematicBreak"
+  },
+  {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "第 2 页"
+      }
+    ]
+  }
+]
+
+=== mdx > parsed ===
+
+[
+  {
+    "type": "yaml",
+    "value": "pageBreak: 123"
+  },
+  {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "首页"
+      }
+    ]
+  },
+  {
+    "type": "thematicBreak"
+  },
+  {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "第 2 页"
+      }
+    ]
+  }
+]
+
+=== mdx > output1 ===
+
+---
+pageBreak: 123
+---
+
+# 首页
+
+***
+
+# 第 2 页
+
+=== mdx > output2 ===
+
+---
+pageBreak: 123
+---
+
+# 首页
+
+***
+
+# 第 2 页
+
+=== html > parsed ===
+
+[
+  {
+    "type": "yaml",
+    "value": "pageBreak: 123"
+  },
+  {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "首页"
+      }
+    ]
+  },
+  {
+    "type": "thematicBreak"
+  },
+  {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "第 2 页"
+      }
+    ]
+  }
+]
+
+=== html > output1 ===
+
+---
+pageBreak: 123
+---
+
+# 首页
+
+***
+
+# 第 2 页
+
+=== html > output2 ===
+
+---
+pageBreak: 123
+---
+
+# 首页
+
+***
+
+# 第 2 页

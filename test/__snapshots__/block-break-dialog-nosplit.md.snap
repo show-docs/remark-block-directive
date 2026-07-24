@@ -2,19 +2,14 @@
 
 ---
 blockBreak: true
-pageBreak: a4
 ---
 
-:::div
-
-# 区块
-
+:::dialog
 A
 
 ---
 
 B
-
 :::
 
 === ast ===
@@ -22,23 +17,13 @@ B
 [
   {
     "type": "yaml",
-    "value": "blockBreak: true\npageBreak: a4"
+    "value": "blockBreak: true"
   },
   {
     "type": "containerDirective",
-    "name": "div",
+    "name": "dialog",
     "attributes": {},
     "children": [
-      {
-        "type": "heading",
-        "depth": 1,
-        "children": [
-          {
-            "type": "text",
-            "value": "区块"
-          }
-        ]
-      },
       {
         "type": "paragraph",
         "children": [
@@ -69,23 +54,13 @@ B
 [
   {
     "type": "yaml",
-    "value": "blockBreak: true\npageBreak: a4"
+    "value": "blockBreak: true"
   },
   {
     "type": "mdxJsxFlowElement",
-    "name": "div",
+    "name": "dialog",
     "attributes": [],
     "children": [
-      {
-        "type": "heading",
-        "depth": 1,
-        "children": [
-          {
-            "type": "text",
-            "value": "区块"
-          }
-        ]
-      },
       {
         "type": "paragraph",
         "children": [
@@ -94,14 +69,10 @@ B
             "value": "A"
           }
         ]
-      }
-    ]
-  },
-  {
-    "type": "mdxJsxFlowElement",
-    "name": "div",
-    "attributes": [],
-    "children": [
+      },
+      {
+        "type": "thematicBreak"
+      },
       {
         "type": "paragraph",
         "children": [
@@ -119,56 +90,40 @@ B
 
 ---
 blockBreak: true
-pageBreak: a4
 ---
 
-<div>
-  # 区块
-
+<dialog>
   A
-</div>
 
-<div>
+  ***
+
   B
-</div>
+</dialog>
 
 === mdx > output2 ===
 
 ---
 blockBreak: true
-pageBreak: a4
 ---
 
-<div>
-  # 区块
-
+<dialog>
   A
-</div>
 
-<div>
+  ***
+
   B
-</div>
+</dialog>
 
 === html > parsed ===
 
 [
   {
     "type": "yaml",
-    "value": "blockBreak: true\npageBreak: a4"
+    "value": "blockBreak: true"
   },
   {
     "type": "html",
-    "value": "<div>"
-  },
-  {
-    "type": "heading",
-    "depth": 1,
-    "children": [
-      {
-        "type": "text",
-        "value": "区块"
-      }
-    ]
+    "value": "<dialog>"
   },
   {
     "type": "paragraph",
@@ -180,12 +135,7 @@ pageBreak: a4
     ]
   },
   {
-    "type": "html",
-    "value": "</div>"
-  },
-  {
-    "type": "html",
-    "value": "<div>"
+    "type": "thematicBreak"
   },
   {
     "type": "paragraph",
@@ -198,7 +148,7 @@ pageBreak: a4
   },
   {
     "type": "html",
-    "value": "</div>"
+    "value": "</dialog>"
   }
 ]
 
@@ -206,40 +156,30 @@ pageBreak: a4
 
 ---
 blockBreak: true
-pageBreak: a4
 ---
 
-<div>
-
-# 区块
+<dialog>
 
 A
 
-</div>
-
-<div>
+***
 
 B
 
-</div>
+</dialog>
 
 === html > output2 ===
 
 ---
 blockBreak: true
-pageBreak: a4
 ---
 
-<div>
-
-# 区块
+<dialog>
 
 A
 
-</div>
-
-<div>
+***
 
 B
 
-</div>
+</dialog>

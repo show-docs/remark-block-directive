@@ -1,0 +1,105 @@
+=== input ===
+
+:::div{#only-id}
+text
+:::
+
+=== ast ===
+
+[
+  {
+    "type": "containerDirective",
+    "name": "div",
+    "attributes": {
+      "id": "only-id"
+    },
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "text"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > parsed ===
+
+[
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "div",
+    "attributes": [
+      {
+        "type": "mdxJsxAttribute",
+        "name": "id",
+        "value": "only-id"
+      }
+    ],
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "text"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > output1 ===
+
+<div id="only-id">
+  text
+</div>
+
+=== mdx > output2 ===
+
+<div id="only-id">
+  text
+</div>
+
+=== html > parsed ===
+
+[
+  {
+    "type": "html",
+    "value": "<div id=\"only-id\">"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "text"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</div>"
+  }
+]
+
+=== html > output1 ===
+
+<div id="only-id">
+
+text
+
+</div>
+
+=== html > output2 ===
+
+<div id="only-id">
+
+text
+
+</div>

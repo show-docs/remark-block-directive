@@ -1,0 +1,481 @@
+=== input ===
+
+---
+pageBreak: a4
+---
+
+# 首页
+
+export const x = 1;
+
+---
+
+# 第 2 页
+
+=== ast ===
+
+[
+  {
+    "type": "yaml",
+    "value": "pageBreak: a4"
+  },
+  {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "首页"
+      }
+    ]
+  },
+  {
+    "type": "mdxjsEsm",
+    "value": "export const x = 1;",
+    "data": {
+      "estree": {
+        "type": "Program",
+        "start": 29,
+        "end": 48,
+        "loc": {
+          "start": {
+            "line": 7,
+            "column": 0,
+            "offset": 29
+          },
+          "end": {
+            "line": 7,
+            "column": 19,
+            "offset": 48
+          }
+        },
+        "body": [
+          {
+            "type": "ExportNamedDeclaration",
+            "start": 29,
+            "end": 48,
+            "loc": {
+              "start": {
+                "line": 7,
+                "column": 0,
+                "offset": 29
+              },
+              "end": {
+                "line": 7,
+                "column": 19,
+                "offset": 48
+              }
+            },
+            "declaration": {
+              "type": "VariableDeclaration",
+              "start": 36,
+              "end": 48,
+              "loc": {
+                "start": {
+                  "line": 7,
+                  "column": 7,
+                  "offset": 36
+                },
+                "end": {
+                  "line": 7,
+                  "column": 19,
+                  "offset": 48
+                }
+              },
+              "declarations": [
+                {
+                  "type": "VariableDeclarator",
+                  "start": 42,
+                  "end": 47,
+                  "loc": {
+                    "start": {
+                      "line": 7,
+                      "column": 13,
+                      "offset": 42
+                    },
+                    "end": {
+                      "line": 7,
+                      "column": 18,
+                      "offset": 47
+                    }
+                  },
+                  "id": {
+                    "type": "Identifier",
+                    "start": 42,
+                    "end": 43,
+                    "loc": {
+                      "start": {
+                        "line": 7,
+                        "column": 13,
+                        "offset": 42
+                      },
+                      "end": {
+                        "line": 7,
+                        "column": 14,
+                        "offset": 43
+                      }
+                    },
+                    "name": "x",
+                    "range": [
+                      42,
+                      43
+                    ]
+                  },
+                  "init": {
+                    "type": "Literal",
+                    "start": 46,
+                    "end": 47,
+                    "loc": {
+                      "start": {
+                        "line": 7,
+                        "column": 17,
+                        "offset": 46
+                      },
+                      "end": {
+                        "line": 7,
+                        "column": 18,
+                        "offset": 47
+                      }
+                    },
+                    "value": 1,
+                    "raw": "1",
+                    "range": [
+                      46,
+                      47
+                    ]
+                  },
+                  "range": [
+                    42,
+                    47
+                  ]
+                }
+              ],
+              "kind": "const",
+              "range": [
+                36,
+                48
+              ]
+            },
+            "specifiers": [],
+            "source": null,
+            "range": [
+              29,
+              48
+            ]
+          }
+        ],
+        "sourceType": "module",
+        "comments": [],
+        "range": [
+          29,
+          48
+        ]
+      }
+    }
+  },
+  {
+    "type": "thematicBreak"
+  },
+  {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "第 2 页"
+      }
+    ]
+  }
+]
+
+=== mdx > parsed ===
+
+[
+  {
+    "type": "yaml",
+    "value": "pageBreak: a4"
+  },
+  {
+    "type": "mdxjsEsm",
+    "value": "export const x = 1;",
+    "data": {
+      "estree": {
+        "type": "Program",
+        "start": 29,
+        "end": 48,
+        "loc": {
+          "start": {
+            "line": 7,
+            "column": 0,
+            "offset": 29
+          },
+          "end": {
+            "line": 7,
+            "column": 19,
+            "offset": 48
+          }
+        },
+        "body": [
+          {
+            "type": "ExportNamedDeclaration",
+            "start": 29,
+            "end": 48,
+            "loc": {
+              "start": {
+                "line": 7,
+                "column": 0,
+                "offset": 29
+              },
+              "end": {
+                "line": 7,
+                "column": 19,
+                "offset": 48
+              }
+            },
+            "declaration": {
+              "type": "VariableDeclaration",
+              "start": 36,
+              "end": 48,
+              "loc": {
+                "start": {
+                  "line": 7,
+                  "column": 7,
+                  "offset": 36
+                },
+                "end": {
+                  "line": 7,
+                  "column": 19,
+                  "offset": 48
+                }
+              },
+              "declarations": [
+                {
+                  "type": "VariableDeclarator",
+                  "start": 42,
+                  "end": 47,
+                  "loc": {
+                    "start": {
+                      "line": 7,
+                      "column": 13,
+                      "offset": 42
+                    },
+                    "end": {
+                      "line": 7,
+                      "column": 18,
+                      "offset": 47
+                    }
+                  },
+                  "id": {
+                    "type": "Identifier",
+                    "start": 42,
+                    "end": 43,
+                    "loc": {
+                      "start": {
+                        "line": 7,
+                        "column": 13,
+                        "offset": 42
+                      },
+                      "end": {
+                        "line": 7,
+                        "column": 14,
+                        "offset": 43
+                      }
+                    },
+                    "name": "x",
+                    "range": [
+                      42,
+                      43
+                    ]
+                  },
+                  "init": {
+                    "type": "Literal",
+                    "start": 46,
+                    "end": 47,
+                    "loc": {
+                      "start": {
+                        "line": 7,
+                        "column": 17,
+                        "offset": 46
+                      },
+                      "end": {
+                        "line": 7,
+                        "column": 18,
+                        "offset": 47
+                      }
+                    },
+                    "value": 1,
+                    "raw": "1",
+                    "range": [
+                      46,
+                      47
+                    ]
+                  },
+                  "range": [
+                    42,
+                    47
+                  ]
+                }
+              ],
+              "kind": "const",
+              "range": [
+                36,
+                48
+              ]
+            },
+            "specifiers": [],
+            "source": null,
+            "range": [
+              29,
+              48
+            ]
+          }
+        ],
+        "sourceType": "module",
+        "comments": [],
+        "range": [
+          29,
+          48
+        ]
+      }
+    }
+  },
+  {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "首页"
+      }
+    ]
+  },
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "div",
+    "attributes": [
+      {
+        "type": "mdxJsxAttribute",
+        "name": "className",
+        "value": "a4"
+      }
+    ],
+    "children": [
+      {
+        "type": "heading",
+        "depth": 1,
+        "children": [
+          {
+            "type": "text",
+            "value": "第 2 页"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > output1 ===
+
+---
+pageBreak: a4
+---
+
+export const x = 1;
+
+# 首页
+
+<div className="a4">
+  # 第 2 页
+</div>
+
+=== mdx > output2 ===
+
+---
+pageBreak: a4
+---
+
+export const x = 1;
+
+# 首页
+
+<div className="a4">
+  # 第 2 页
+</div>
+
+=== html > parsed ===
+
+[
+  {
+    "type": "yaml",
+    "value": "pageBreak: a4"
+  },
+  {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "首页"
+      }
+    ]
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "export const x = 1;"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "<div class=\"a4\">"
+  },
+  {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "第 2 页"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</div>"
+  }
+]
+
+=== html > output1 ===
+
+---
+pageBreak: a4
+---
+
+# 首页
+
+export const x = 1;
+
+<div class="a4">
+
+# 第 2 页
+
+</div>
+
+=== html > output2 ===
+
+---
+pageBreak: a4
+---
+
+# 首页
+
+export const x = 1;
+
+<div class="a4">
+
+# 第 2 页
+
+</div>

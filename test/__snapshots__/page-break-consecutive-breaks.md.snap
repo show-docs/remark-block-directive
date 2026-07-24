@@ -1,0 +1,179 @@
+=== input ===
+
+---
+pageBreak: a4
+---
+
+# 首页
+
+---
+
+---
+
+# 第 2 页
+
+=== ast ===
+
+[
+  {
+    "type": "yaml",
+    "value": "pageBreak: a4"
+  },
+  {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "首页"
+      }
+    ]
+  },
+  {
+    "type": "thematicBreak"
+  },
+  {
+    "type": "thematicBreak"
+  },
+  {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "第 2 页"
+      }
+    ]
+  }
+]
+
+=== mdx > parsed ===
+
+[
+  {
+    "type": "yaml",
+    "value": "pageBreak: a4"
+  },
+  {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "首页"
+      }
+    ]
+  },
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "div",
+    "attributes": [
+      {
+        "type": "mdxJsxAttribute",
+        "name": "className",
+        "value": "a4"
+      }
+    ],
+    "children": [
+      {
+        "type": "heading",
+        "depth": 1,
+        "children": [
+          {
+            "type": "text",
+            "value": "第 2 页"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > output1 ===
+
+---
+pageBreak: a4
+---
+
+# 首页
+
+<div className="a4">
+  # 第 2 页
+</div>
+
+=== mdx > output2 ===
+
+---
+pageBreak: a4
+---
+
+# 首页
+
+<div className="a4">
+  # 第 2 页
+</div>
+
+=== html > parsed ===
+
+[
+  {
+    "type": "yaml",
+    "value": "pageBreak: a4"
+  },
+  {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "首页"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "<div class=\"a4\">"
+  },
+  {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "第 2 页"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</div>"
+  }
+]
+
+=== html > output1 ===
+
+---
+pageBreak: a4
+---
+
+# 首页
+
+<div class="a4">
+
+# 第 2 页
+
+</div>
+
+=== html > output2 ===
+
+---
+pageBreak: a4
+---
+
+# 首页
+
+<div class="a4">
+
+# 第 2 页
+
+</div>

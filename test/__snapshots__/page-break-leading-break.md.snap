@@ -6,11 +6,15 @@ pageBreak: a4
 
 ---
 
-A
+# 第 1 页
+
+文档以 `---` 开头，首个 `---` 前没有任何内容，因此不存在保留段，全部被包裹进 div.a4。
 
 ---
 
-B
+# 第 2 页
+
+第二段（被包裹进 div.a4）。
 
 === ast ===
 
@@ -23,11 +27,37 @@ B
     "type": "thematicBreak"
   },
   {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "第 1 页"
+      }
+    ]
+  },
+  {
     "type": "paragraph",
     "children": [
       {
         "type": "text",
-        "value": "A"
+        "value": "文档以 "
+      },
+      {
+        "type": "inlineCode",
+        "value": "---"
+      },
+      {
+        "type": "text",
+        "value": " 开头，首个 "
+      },
+      {
+        "type": "inlineCode",
+        "value": "---"
+      },
+      {
+        "type": "text",
+        "value": " 前没有任何内容，因此不存在保留段，全部被包裹进 div.a4。"
       }
     ]
   },
@@ -35,11 +65,21 @@ B
     "type": "thematicBreak"
   },
   {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "第 2 页"
+      }
+    ]
+  },
+  {
     "type": "paragraph",
     "children": [
       {
         "type": "text",
-        "value": "B"
+        "value": "第二段（被包裹进 div.a4）。"
       }
     ]
   }
@@ -64,11 +104,37 @@ B
     ],
     "children": [
       {
+        "type": "heading",
+        "depth": 1,
+        "children": [
+          {
+            "type": "text",
+            "value": "第 1 页"
+          }
+        ]
+      },
+      {
         "type": "paragraph",
         "children": [
           {
             "type": "text",
-            "value": "A"
+            "value": "文档以 "
+          },
+          {
+            "type": "inlineCode",
+            "value": "---"
+          },
+          {
+            "type": "text",
+            "value": " 开头，首个 "
+          },
+          {
+            "type": "inlineCode",
+            "value": "---"
+          },
+          {
+            "type": "text",
+            "value": " 前没有任何内容，因此不存在保留段，全部被包裹进 div.a4。"
           }
         ]
       }
@@ -86,11 +152,21 @@ B
     ],
     "children": [
       {
+        "type": "heading",
+        "depth": 1,
+        "children": [
+          {
+            "type": "text",
+            "value": "第 2 页"
+          }
+        ]
+      },
+      {
         "type": "paragraph",
         "children": [
           {
             "type": "text",
-            "value": "B"
+            "value": "第二段（被包裹进 div.a4）。"
           }
         ]
       }
@@ -105,11 +181,15 @@ pageBreak: a4
 ---
 
 <div className="a4">
-  A
+  # 第 1 页
+
+  文档以 `---` 开头，首个 `---` 前没有任何内容，因此不存在保留段，全部被包裹进 div.a4。
 </div>
 
 <div className="a4">
-  B
+  # 第 2 页
+
+  第二段（被包裹进 div.a4）。
 </div>
 
 === mdx > output2 ===
@@ -119,11 +199,15 @@ pageBreak: a4
 ---
 
 <div className="a4">
-  A
+  # 第 1 页
+
+  文档以 `---` 开头，首个 `---` 前没有任何内容，因此不存在保留段，全部被包裹进 div.a4。
 </div>
 
 <div className="a4">
-  B
+  # 第 2 页
+
+  第二段（被包裹进 div.a4）。
 </div>
 
 === html > parsed ===
@@ -138,11 +222,37 @@ pageBreak: a4
     "value": "<div class=\"a4\">"
   },
   {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "第 1 页"
+      }
+    ]
+  },
+  {
     "type": "paragraph",
     "children": [
       {
         "type": "text",
-        "value": "A"
+        "value": "文档以 "
+      },
+      {
+        "type": "inlineCode",
+        "value": "---"
+      },
+      {
+        "type": "text",
+        "value": " 开头，首个 "
+      },
+      {
+        "type": "inlineCode",
+        "value": "---"
+      },
+      {
+        "type": "text",
+        "value": " 前没有任何内容，因此不存在保留段，全部被包裹进 div.a4。"
       }
     ]
   },
@@ -155,11 +265,21 @@ pageBreak: a4
     "value": "<div class=\"a4\">"
   },
   {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "第 2 页"
+      }
+    ]
+  },
+  {
     "type": "paragraph",
     "children": [
       {
         "type": "text",
-        "value": "B"
+        "value": "第二段（被包裹进 div.a4）。"
       }
     ]
   },
@@ -177,13 +297,17 @@ pageBreak: a4
 
 <div class="a4">
 
-A
+# 第 1 页
+
+文档以 `---` 开头，首个 `---` 前没有任何内容，因此不存在保留段，全部被包裹进 div.a4。
 
 </div>
 
 <div class="a4">
 
-B
+# 第 2 页
+
+第二段（被包裹进 div.a4）。
 
 </div>
 
@@ -195,12 +319,16 @@ pageBreak: a4
 
 <div class="a4">
 
-A
+# 第 1 页
+
+文档以 `---` 开头，首个 `---` 前没有任何内容，因此不存在保留段，全部被包裹进 div.a4。
 
 </div>
 
 <div class="a4">
 
-B
+# 第 2 页
+
+第二段（被包裹进 div.a4）。
 
 </div>

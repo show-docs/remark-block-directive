@@ -1,0 +1,535 @@
+=== input ===
+
+:::article
+A
+:::
+
+:::aside
+B
+:::
+
+:::footer
+C
+:::
+
+:::header
+D
+:::
+
+:::main
+E
+:::
+
+:::section
+F
+:::
+
+:::dialog
+G
+:::
+
+=== ast ===
+
+[
+  {
+    "type": "containerDirective",
+    "name": "article",
+    "attributes": {},
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "A"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "containerDirective",
+    "name": "aside",
+    "attributes": {},
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "B"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "containerDirective",
+    "name": "footer",
+    "attributes": {},
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "C"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "containerDirective",
+    "name": "header",
+    "attributes": {},
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "D"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "containerDirective",
+    "name": "main",
+    "attributes": {},
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "E"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "containerDirective",
+    "name": "section",
+    "attributes": {},
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "F"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "containerDirective",
+    "name": "dialog",
+    "attributes": {},
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "G"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > parsed ===
+
+[
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "article",
+    "attributes": [],
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "A"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "aside",
+    "attributes": [],
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "B"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "footer",
+    "attributes": [],
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "C"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "header",
+    "attributes": [],
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "D"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "main",
+    "attributes": [],
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "E"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "section",
+    "attributes": [],
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "F"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "dialog",
+    "attributes": [],
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "G"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > output1 ===
+
+<article>
+  A
+</article>
+
+<aside>
+  B
+</aside>
+
+<footer>
+  C
+</footer>
+
+<header>
+  D
+</header>
+
+<main>
+  E
+</main>
+
+<section>
+  F
+</section>
+
+<dialog>
+  G
+</dialog>
+
+=== mdx > output2 ===
+
+<article>
+  A
+</article>
+
+<aside>
+  B
+</aside>
+
+<footer>
+  C
+</footer>
+
+<header>
+  D
+</header>
+
+<main>
+  E
+</main>
+
+<section>
+  F
+</section>
+
+<dialog>
+  G
+</dialog>
+
+=== html > parsed ===
+
+[
+  {
+    "type": "html",
+    "value": "<article>"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "A"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</article>"
+  },
+  {
+    "type": "html",
+    "value": "<aside>"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "B"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</aside>"
+  },
+  {
+    "type": "html",
+    "value": "<footer>"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "C"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</footer>"
+  },
+  {
+    "type": "html",
+    "value": "<header>"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "D"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</header>"
+  },
+  {
+    "type": "html",
+    "value": "<main>"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "E"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</main>"
+  },
+  {
+    "type": "html",
+    "value": "<section>"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "F"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</section>"
+  },
+  {
+    "type": "html",
+    "value": "<dialog>"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "G"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</dialog>"
+  }
+]
+
+=== html > output1 ===
+
+<article>
+
+A
+
+</article>
+
+<aside>
+
+B
+
+</aside>
+
+<footer>
+
+C
+
+</footer>
+
+<header>
+
+D
+
+</header>
+
+<main>
+
+E
+
+</main>
+
+<section>
+
+F
+
+</section>
+
+<dialog>
+
+G
+
+</dialog>
+
+=== html > output2 ===
+
+<article>
+
+A
+
+</article>
+
+<aside>
+
+B
+
+</aside>
+
+<footer>
+
+C
+
+</footer>
+
+<header>
+
+D
+
+</header>
+
+<main>
+
+E
+
+</main>
+
+<section>
+
+F
+
+</section>
+
+<dialog>
+
+G
+
+</dialog>

@@ -4,6 +4,10 @@
 pageBreak: a4
 ---
 
+# 单页
+
+没有 root 级 `---`，整篇作为「首页」保持原样，不包裹。
+
 A
 
 B
@@ -14,6 +18,33 @@ B
   {
     "type": "yaml",
     "value": "pageBreak: a4"
+  },
+  {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "单页"
+      }
+    ]
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "没有 root 级 "
+      },
+      {
+        "type": "inlineCode",
+        "value": "---"
+      },
+      {
+        "type": "text",
+        "value": "，整篇作为「首页」保持原样，不包裹。"
+      }
+    ]
   },
   {
     "type": "paragraph",
@@ -43,6 +74,33 @@ B
     "value": "pageBreak: a4"
   },
   {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "单页"
+      }
+    ]
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "没有 root 级 "
+      },
+      {
+        "type": "inlineCode",
+        "value": "---"
+      },
+      {
+        "type": "text",
+        "value": "，整篇作为「首页」保持原样，不包裹。"
+      }
+    ]
+  },
+  {
     "type": "paragraph",
     "children": [
       {
@@ -68,6 +126,10 @@ B
 pageBreak: a4
 ---
 
+# 单页
+
+没有 root 级 `---`，整篇作为「首页」保持原样，不包裹。
+
 A
 
 B
@@ -77,6 +139,10 @@ B
 ---
 pageBreak: a4
 ---
+
+# 单页
+
+没有 root 级 `---`，整篇作为「首页」保持原样，不包裹。
 
 A
 
@@ -88,6 +154,33 @@ B
   {
     "type": "yaml",
     "value": "pageBreak: a4"
+  },
+  {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "单页"
+      }
+    ]
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "没有 root 级 "
+      },
+      {
+        "type": "inlineCode",
+        "value": "---"
+      },
+      {
+        "type": "text",
+        "value": "，整篇作为「首页」保持原样，不包裹。"
+      }
+    ]
   },
   {
     "type": "paragraph",
@@ -115,6 +208,10 @@ B
 pageBreak: a4
 ---
 
+# 单页
+
+没有 root 级 `---`，整篇作为「首页」保持原样，不包裹。
+
 A
 
 B
@@ -124,6 +221,10 @@ B
 ---
 pageBreak: a4
 ---
+
+# 单页
+
+没有 root 级 `---`，整篇作为「首页」保持原样，不包裹。
 
 A
 

@@ -1,0 +1,97 @@
+=== input ===
+
+:::div{}
+text
+:::
+
+=== ast ===
+
+[
+  {
+    "type": "containerDirective",
+    "name": "div",
+    "attributes": {},
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "text"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > parsed ===
+
+[
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "div",
+    "attributes": [],
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "text"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > output1 ===
+
+<div>
+  text
+</div>
+
+=== mdx > output2 ===
+
+<div>
+  text
+</div>
+
+=== html > parsed ===
+
+[
+  {
+    "type": "html",
+    "value": "<div>"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "text"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</div>"
+  }
+]
+
+=== html > output1 ===
+
+<div>
+
+text
+
+</div>
+
+=== html > output2 ===
+
+<div>
+
+text
+
+</div>

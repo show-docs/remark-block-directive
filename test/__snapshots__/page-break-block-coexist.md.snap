@@ -7,17 +7,21 @@ pageBreak: a4
 
 :::div
 
-A
+# 首页区块
+
+首页内容（第一个 root 级 `---` 之前，保持原样）。
 
 ---
 
 B
 
-::::
+:::
 
 ---
 
-X
+# 第 2 页
+
+X（被包裹进 div.a4）。
 
 === ast ===
 
@@ -32,11 +36,29 @@ X
     "attributes": {},
     "children": [
       {
+        "type": "heading",
+        "depth": 1,
+        "children": [
+          {
+            "type": "text",
+            "value": "首页区块"
+          }
+        ]
+      },
+      {
         "type": "paragraph",
         "children": [
           {
             "type": "text",
-            "value": "A"
+            "value": "首页内容（第一个 root 级 "
+          },
+          {
+            "type": "inlineCode",
+            "value": "---"
+          },
+          {
+            "type": "text",
+            "value": " 之前，保持原样）。"
           }
         ]
       },
@@ -58,11 +80,21 @@ X
     "type": "thematicBreak"
   },
   {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "第 2 页"
+      }
+    ]
+  },
+  {
     "type": "paragraph",
     "children": [
       {
         "type": "text",
-        "value": "X"
+        "value": "X（被包裹进 div.a4）。"
       }
     ]
   }
@@ -78,43 +110,48 @@ X
   {
     "type": "mdxJsxFlowElement",
     "name": "div",
-    "attributes": [
-      {
-        "type": "mdxJsxAttribute",
-        "name": "className",
-        "value": "a4"
-      }
-    ],
+    "attributes": [],
     "children": [
       {
-        "type": "mdxJsxFlowElement",
-        "name": "div",
-        "attributes": [],
+        "type": "heading",
+        "depth": 1,
         "children": [
           {
-            "type": "paragraph",
-            "children": [
-              {
-                "type": "text",
-                "value": "A"
-              }
-            ]
+            "type": "text",
+            "value": "首页区块"
           }
         ]
       },
       {
-        "type": "mdxJsxFlowElement",
-        "name": "div",
-        "attributes": [],
+        "type": "paragraph",
         "children": [
           {
-            "type": "paragraph",
-            "children": [
-              {
-                "type": "text",
-                "value": "B"
-              }
-            ]
+            "type": "text",
+            "value": "首页内容（第一个 root 级 "
+          },
+          {
+            "type": "inlineCode",
+            "value": "---"
+          },
+          {
+            "type": "text",
+            "value": " 之前，保持原样）。"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "div",
+    "attributes": [],
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "B"
           }
         ]
       }
@@ -132,11 +169,21 @@ X
     ],
     "children": [
       {
+        "type": "heading",
+        "depth": 1,
+        "children": [
+          {
+            "type": "text",
+            "value": "第 2 页"
+          }
+        ]
+      },
+      {
         "type": "paragraph",
         "children": [
           {
             "type": "text",
-            "value": "X"
+            "value": "X（被包裹进 div.a4）。"
           }
         ]
       }
@@ -151,18 +198,20 @@ blockBreak: true
 pageBreak: a4
 ---
 
-<div className="a4">
-  <div>
-    A
-  </div>
+<div>
+  # 首页区块
 
-  <div>
-    B
-  </div>
+  首页内容（第一个 root 级 `---` 之前，保持原样）。
+</div>
+
+<div>
+  B
 </div>
 
 <div className="a4">
-  X
+  # 第 2 页
+
+  X（被包裹进 div.a4）。
 </div>
 
 === mdx > output2 ===
@@ -172,18 +221,20 @@ blockBreak: true
 pageBreak: a4
 ---
 
-<div className="a4">
-  <div>
-    A
-  </div>
+<div>
+  # 首页区块
 
-  <div>
-    B
-  </div>
+  首页内容（第一个 root 级 `---` 之前，保持原样）。
+</div>
+
+<div>
+  B
 </div>
 
 <div className="a4">
-  X
+  # 第 2 页
+
+  X（被包裹进 div.a4）。
 </div>
 
 === html > parsed ===
@@ -195,18 +246,32 @@ pageBreak: a4
   },
   {
     "type": "html",
-    "value": "<div class=\"a4\">"
+    "value": "<div>"
   },
   {
-    "type": "html",
-    "value": "<div>"
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "首页区块"
+      }
+    ]
   },
   {
     "type": "paragraph",
     "children": [
       {
         "type": "text",
-        "value": "A"
+        "value": "首页内容（第一个 root 级 "
+      },
+      {
+        "type": "inlineCode",
+        "value": "---"
+      },
+      {
+        "type": "text",
+        "value": " 之前，保持原样）。"
       }
     ]
   },
@@ -233,18 +298,24 @@ pageBreak: a4
   },
   {
     "type": "html",
-    "value": "</div>"
+    "value": "<div class=\"a4\">"
   },
   {
-    "type": "html",
-    "value": "<div class=\"a4\">"
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "第 2 页"
+      }
+    ]
   },
   {
     "type": "paragraph",
     "children": [
       {
         "type": "text",
-        "value": "X"
+        "value": "X（被包裹进 div.a4）。"
       }
     ]
   },
@@ -261,11 +332,11 @@ blockBreak: true
 pageBreak: a4
 ---
 
-<div class="a4">
-
 <div>
 
-A
+# 首页区块
+
+首页内容（第一个 root 级 `---` 之前，保持原样）。
 
 </div>
 
@@ -275,11 +346,11 @@ B
 
 </div>
 
-</div>
-
 <div class="a4">
 
-X
+# 第 2 页
+
+X（被包裹进 div.a4）。
 
 </div>
 
@@ -290,11 +361,11 @@ blockBreak: true
 pageBreak: a4
 ---
 
-<div class="a4">
-
 <div>
 
-A
+# 首页区块
+
+首页内容（第一个 root 级 `---` 之前，保持原样）。
 
 </div>
 
@@ -304,10 +375,10 @@ B
 
 </div>
 
-</div>
-
 <div class="a4">
 
-X
+# 第 2 页
+
+X（被包裹进 div.a4）。
 
 </div>

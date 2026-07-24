@@ -1,0 +1,3 @@
+:::div{#only-id}
+text
+:::

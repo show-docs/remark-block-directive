@@ -4,15 +4,21 @@
 pageBreak: a4
 ---
 
-A
+# 封面
+
+首页内容（第一个 `---` 之前，保持原样，不被包裹）。
 
 ---
 
-B
+# 第 2 页
+
+第二段内容（被包裹进 div.a4）。
 
 ---
 
-C
+# 第 3 页
+
+第三段内容（被包裹进 div.a4）。
 
 === ast ===
 
@@ -22,11 +28,29 @@ C
     "value": "pageBreak: a4"
   },
   {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "封面"
+      }
+    ]
+  },
+  {
     "type": "paragraph",
     "children": [
       {
         "type": "text",
-        "value": "A"
+        "value": "首页内容（第一个 "
+      },
+      {
+        "type": "inlineCode",
+        "value": "---"
+      },
+      {
+        "type": "text",
+        "value": " 之前，保持原样，不被包裹）。"
       }
     ]
   },
@@ -34,11 +58,21 @@ C
     "type": "thematicBreak"
   },
   {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "第 2 页"
+      }
+    ]
+  },
+  {
     "type": "paragraph",
     "children": [
       {
         "type": "text",
-        "value": "B"
+        "value": "第二段内容（被包裹进 div.a4）。"
       }
     ]
   },
@@ -46,11 +80,21 @@ C
     "type": "thematicBreak"
   },
   {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "第 3 页"
+      }
+    ]
+  },
+  {
     "type": "paragraph",
     "children": [
       {
         "type": "text",
-        "value": "C"
+        "value": "第三段内容（被包裹进 div.a4）。"
       }
     ]
   }
@@ -64,6 +108,33 @@ C
     "value": "pageBreak: a4"
   },
   {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "封面"
+      }
+    ]
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "首页内容（第一个 "
+      },
+      {
+        "type": "inlineCode",
+        "value": "---"
+      },
+      {
+        "type": "text",
+        "value": " 之前，保持原样，不被包裹）。"
+      }
+    ]
+  },
+  {
     "type": "mdxJsxFlowElement",
     "name": "div",
     "attributes": [
@@ -75,11 +146,21 @@ C
     ],
     "children": [
       {
+        "type": "heading",
+        "depth": 1,
+        "children": [
+          {
+            "type": "text",
+            "value": "第 2 页"
+          }
+        ]
+      },
+      {
         "type": "paragraph",
         "children": [
           {
             "type": "text",
-            "value": "A"
+            "value": "第二段内容（被包裹进 div.a4）。"
           }
         ]
       }
@@ -97,33 +178,21 @@ C
     ],
     "children": [
       {
-        "type": "paragraph",
+        "type": "heading",
+        "depth": 1,
         "children": [
           {
             "type": "text",
-            "value": "B"
+            "value": "第 3 页"
           }
         ]
-      }
-    ]
-  },
-  {
-    "type": "mdxJsxFlowElement",
-    "name": "div",
-    "attributes": [
-      {
-        "type": "mdxJsxAttribute",
-        "name": "className",
-        "value": "a4"
-      }
-    ],
-    "children": [
+      },
       {
         "type": "paragraph",
         "children": [
           {
             "type": "text",
-            "value": "C"
+            "value": "第三段内容（被包裹进 div.a4）。"
           }
         ]
       }
@@ -137,16 +206,20 @@ C
 pageBreak: a4
 ---
 
+# 封面
+
+首页内容（第一个 `---` 之前，保持原样，不被包裹）。
+
 <div className="a4">
-  A
+  # 第 2 页
+
+  第二段内容（被包裹进 div.a4）。
 </div>
 
 <div className="a4">
-  B
-</div>
+  # 第 3 页
 
-<div className="a4">
-  C
+  第三段内容（被包裹进 div.a4）。
 </div>
 
 === mdx > output2 ===
@@ -155,16 +228,20 @@ pageBreak: a4
 pageBreak: a4
 ---
 
+# 封面
+
+首页内容（第一个 `---` 之前，保持原样，不被包裹）。
+
 <div className="a4">
-  A
+  # 第 2 页
+
+  第二段内容（被包裹进 div.a4）。
 </div>
 
 <div className="a4">
-  B
-</div>
+  # 第 3 页
 
-<div className="a4">
-  C
+  第三段内容（被包裹进 div.a4）。
 </div>
 
 === html > parsed ===
@@ -175,15 +252,52 @@ pageBreak: a4
     "value": "pageBreak: a4"
   },
   {
-    "type": "html",
-    "value": "<div class=\"a4\">"
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "封面"
+      }
+    ]
   },
   {
     "type": "paragraph",
     "children": [
       {
         "type": "text",
-        "value": "A"
+        "value": "首页内容（第一个 "
+      },
+      {
+        "type": "inlineCode",
+        "value": "---"
+      },
+      {
+        "type": "text",
+        "value": " 之前，保持原样，不被包裹）。"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "<div class=\"a4\">"
+  },
+  {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "第 2 页"
+      }
+    ]
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "第二段内容（被包裹进 div.a4）。"
       }
     ]
   },
@@ -196,28 +310,21 @@ pageBreak: a4
     "value": "<div class=\"a4\">"
   },
   {
-    "type": "paragraph",
+    "type": "heading",
+    "depth": 1,
     "children": [
       {
         "type": "text",
-        "value": "B"
+        "value": "第 3 页"
       }
     ]
   },
   {
-    "type": "html",
-    "value": "</div>"
-  },
-  {
-    "type": "html",
-    "value": "<div class=\"a4\">"
-  },
-  {
     "type": "paragraph",
     "children": [
       {
         "type": "text",
-        "value": "C"
+        "value": "第三段内容（被包裹进 div.a4）。"
       }
     ]
   },
@@ -233,21 +340,23 @@ pageBreak: a4
 pageBreak: a4
 ---
 
+# 封面
+
+首页内容（第一个 `---` 之前，保持原样，不被包裹）。
+
 <div class="a4">
 
-A
+# 第 2 页
+
+第二段内容（被包裹进 div.a4）。
 
 </div>
 
 <div class="a4">
 
-B
+# 第 3 页
 
-</div>
-
-<div class="a4">
-
-C
+第三段内容（被包裹进 div.a4）。
 
 </div>
 
@@ -257,20 +366,22 @@ C
 pageBreak: a4
 ---
 
+# 封面
+
+首页内容（第一个 `---` 之前，保持原样，不被包裹）。
+
 <div class="a4">
 
-A
+# 第 2 页
+
+第二段内容（被包裹进 div.a4）。
 
 </div>
 
 <div class="a4">
 
-B
+# 第 3 页
 
-</div>
-
-<div class="a4">
-
-C
+第三段内容（被包裹进 div.a4）。
 
 </div>

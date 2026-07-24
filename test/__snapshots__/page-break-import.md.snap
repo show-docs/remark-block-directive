@@ -6,11 +6,15 @@ pageBreak: a4
 
 import Foo from './foo.mdx';
 
-A
+# 封面
+
+首页内容（含 import，第一个 `---` 之前，保持原样）。
 
 ---
 
-B
+# 第 2 页
+
+第二段内容（被包裹进 div.a4）。
 
 === ast ===
 
@@ -140,11 +144,29 @@ B
     }
   },
   {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "封面"
+      }
+    ]
+  },
+  {
     "type": "paragraph",
     "children": [
       {
         "type": "text",
-        "value": "A"
+        "value": "首页内容（含 import，第一个 "
+      },
+      {
+        "type": "inlineCode",
+        "value": "---"
+      },
+      {
+        "type": "text",
+        "value": " 之前，保持原样）。"
       }
     ]
   },
@@ -152,11 +174,21 @@ B
     "type": "thematicBreak"
   },
   {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "第 2 页"
+      }
+    ]
+  },
+  {
     "type": "paragraph",
     "children": [
       {
         "type": "text",
-        "value": "B"
+        "value": "第二段内容（被包裹进 div.a4）。"
       }
     ]
   }
@@ -290,24 +322,29 @@ B
     }
   },
   {
-    "type": "mdxJsxFlowElement",
-    "name": "div",
-    "attributes": [
-      {
-        "type": "mdxJsxAttribute",
-        "name": "className",
-        "value": "a4"
-      }
-    ],
+    "type": "heading",
+    "depth": 1,
     "children": [
       {
-        "type": "paragraph",
-        "children": [
-          {
-            "type": "text",
-            "value": "A"
-          }
-        ]
+        "type": "text",
+        "value": "封面"
+      }
+    ]
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "首页内容（含 import，第一个 "
+      },
+      {
+        "type": "inlineCode",
+        "value": "---"
+      },
+      {
+        "type": "text",
+        "value": " 之前，保持原样）。"
       }
     ]
   },
@@ -323,11 +360,21 @@ B
     ],
     "children": [
       {
+        "type": "heading",
+        "depth": 1,
+        "children": [
+          {
+            "type": "text",
+            "value": "第 2 页"
+          }
+        ]
+      },
+      {
         "type": "paragraph",
         "children": [
           {
             "type": "text",
-            "value": "B"
+            "value": "第二段内容（被包裹进 div.a4）。"
           }
         ]
       }
@@ -343,12 +390,14 @@ pageBreak: a4
 
 import Foo from './foo.mdx';
 
-<div className="a4">
-  A
-</div>
+# 封面
+
+首页内容（含 import，第一个 `---` 之前，保持原样）。
 
 <div className="a4">
-  B
+  # 第 2 页
+
+  第二段内容（被包裹进 div.a4）。
 </div>
 
 === mdx > output2 ===
@@ -359,12 +408,14 @@ pageBreak: a4
 
 import Foo from './foo.mdx';
 
-<div className="a4">
-  A
-</div>
+# 封面
+
+首页内容（含 import，第一个 `---` 之前，保持原样）。
 
 <div className="a4">
-  B
+  # 第 2 页
+
+  第二段内容（被包裹进 div.a4）。
 </div>
 
 === html > parsed ===
@@ -373,10 +424,6 @@ import Foo from './foo.mdx';
   {
     "type": "yaml",
     "value": "pageBreak: a4"
-  },
-  {
-    "type": "html",
-    "value": "<div class=\"a4\">"
   },
   {
     "type": "paragraph",
@@ -388,28 +435,52 @@ import Foo from './foo.mdx';
     ]
   },
   {
-    "type": "paragraph",
+    "type": "heading",
+    "depth": 1,
     "children": [
       {
         "type": "text",
-        "value": "A"
+        "value": "封面"
       }
     ]
   },
   {
-    "type": "html",
-    "value": "</div>"
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "首页内容（含 import，第一个 "
+      },
+      {
+        "type": "inlineCode",
+        "value": "---"
+      },
+      {
+        "type": "text",
+        "value": " 之前，保持原样）。"
+      }
+    ]
   },
   {
     "type": "html",
     "value": "<div class=\"a4\">"
   },
   {
+    "type": "heading",
+    "depth": 1,
+    "children": [
+      {
+        "type": "text",
+        "value": "第 2 页"
+      }
+    ]
+  },
+  {
     "type": "paragraph",
     "children": [
       {
         "type": "text",
-        "value": "B"
+        "value": "第二段内容（被包裹进 div.a4）。"
       }
     ]
   },
@@ -425,17 +496,17 @@ import Foo from './foo.mdx';
 pageBreak: a4
 ---
 
-<div class="a4">
-
 import Foo from './foo.mdx';
 
-A
+# 封面
 
-</div>
+首页内容（含 import，第一个 `---` 之前，保持原样）。
 
 <div class="a4">
 
-B
+# 第 2 页
+
+第二段内容（被包裹进 div.a4）。
 
 </div>
 
@@ -445,16 +516,16 @@ B
 pageBreak: a4
 ---
 
-<div class="a4">
-
 import Foo from './foo.mdx';
 
-A
+# 封面
 
-</div>
+首页内容（含 import，第一个 `---` 之前，保持原样）。
 
 <div class="a4">
 
-B
+# 第 2 页
+
+第二段内容（被包裹进 div.a4）。
 
 </div>

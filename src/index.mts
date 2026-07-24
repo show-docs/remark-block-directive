@@ -208,6 +208,7 @@ function transformNodes(
 
 /**
  * 在 root 级别按 `---` 分页：将每段内容包裹进 `div{.<className>}`。
+ * 第一个 `---` **之前**的内容保持原样（不包裹）；其后每段各包裹一个 `div`。
  * 顶层 `yaml`（frontmatter）与 `mdxjsEsm`（`import`/`export`）被保留在包裹层之外。
  * 仅当存在 root 级分割线时才包裹，保证重复处理幂等。
  */
@@ -237,28 +238,26 @@ function applyPageBreak(
     }
   }
 
-  const sections = splitByThematicBreak(body).filter(
-    (section) => section.length > 0,
-  );
+  // 第一个 `---` 之前的内容保持原样（不包裹）；其后（tail）各段各包裹一个 `div`。
+  const firstBreak = body.findIndex((node) => node.type === 'thematicBreak');
+  const head = firstBreak === -1 ? body : body.slice(0, firstBreak);
+  const tail = firstBreak === -1 ? [] : body.slice(firstBreak + 1);
 
-  // 无 root 级分割线则不包裹，保持幂等
-  if (sections.length <= 1) {
-    return nodes;
-  }
+  const wrapped = splitByThematicBreak(tail)
+    .filter((section) => section.length > 0)
+    .flatMap((section) =>
+      convertDirective(
+        {
+          type: 'containerDirective',
+          name: 'div',
+          attributes: { class: className },
+          children: section,
+        },
+        mode,
+      ),
+    );
 
-  const wrapped = sections.flatMap((section) =>
-    convertDirective(
-      {
-        type: 'containerDirective',
-        name: 'div',
-        attributes: { class: className },
-        children: section,
-      },
-      mode,
-    ),
-  );
-
-  return [...leading, ...esm, ...wrapped];
+  return [...leading, ...esm, ...head, ...wrapped];
 }
 
 /**
@@ -266,7 +265,7 @@ function applyPageBreak(
  * 并按 frontmatter 中的 `blockBreak` / `pageBreak` 配置进行分页：
  *
  * - `blockBreak: true`：对容器指令**内部**的 `---` 分页。
- * - `pageBreak: <class>`：对 root 级别（容器外部）的 `---` 分页，每段包裹进 `div{.<class>}`。
+ * - `pageBreak: <class>`：对 root 级别（容器外部）的 `---` 分页，第一个 `---` **之前**的内容保持原样，其后每段落各包裹进 `div{.<class>}`。
  *
  * @param mode 转换模式。
  *   - `'mdx'`（默认）：转换为 `mdxJsxFlowElement`，需配合 `remark-mdx` 使用。

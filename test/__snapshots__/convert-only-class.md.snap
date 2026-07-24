@@ -1,0 +1,105 @@
+=== input ===
+
+:::div{.only-class}
+text
+:::
+
+=== ast ===
+
+[
+  {
+    "type": "containerDirective",
+    "name": "div",
+    "attributes": {
+      "class": "only-class"
+    },
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "text"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > parsed ===
+
+[
+  {
+    "type": "mdxJsxFlowElement",
+    "name": "div",
+    "attributes": [
+      {
+        "type": "mdxJsxAttribute",
+        "name": "className",
+        "value": "only-class"
+      }
+    ],
+    "children": [
+      {
+        "type": "paragraph",
+        "children": [
+          {
+            "type": "text",
+            "value": "text"
+          }
+        ]
+      }
+    ]
+  }
+]
+
+=== mdx > output1 ===
+
+<div className="only-class">
+  text
+</div>
+
+=== mdx > output2 ===
+
+<div className="only-class">
+  text
+</div>
+
+=== html > parsed ===
+
+[
+  {
+    "type": "html",
+    "value": "<div class=\"only-class\">"
+  },
+  {
+    "type": "paragraph",
+    "children": [
+      {
+        "type": "text",
+        "value": "text"
+      }
+    ]
+  },
+  {
+    "type": "html",
+    "value": "</div>"
+  }
+]
+
+=== html > output1 ===
+
+<div class="only-class">
+
+text
+
+</div>
+
+=== html > output2 ===
+
+<div class="only-class">
+
+text
+
+</div>
